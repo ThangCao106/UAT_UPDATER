@@ -1,6 +1,6 @@
 pipeline {  
     agent any
-     def runComment = true;
+    def runComment = true;
     try {
         // In the console logs
         // Will ask you to Proceed a release (60 sconds temporisation)
