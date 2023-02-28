@@ -5,7 +5,7 @@ pipeline {
 		    steps {
 			    script {
 			      timeout(time: 5, unit: 'MINUTES') {
-				input(id: "MoPhien Gate", message: "MoPhien ?", parameters: [[$class: 'BooleanParameterDefinition', defaultValue: true, description: '', ok: 'MoPhien')
+				def result = input(id: "MoPhien Gate", message: "MoPhien ?", parameters: [[$class: 'BooleanParameterDefinition', defaultValue: true, description: '', ok: 'MoPhien']])
 			        echo 'result: ' + result
 			      }
 		         }
