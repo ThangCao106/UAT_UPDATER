@@ -3,24 +3,24 @@ pipeline {
     stages {
         stage('restart OTWS'){
             steps{
-                ansiblePlaybook  disableHostKeyChecking: true  playbook: 'recycleOTWS.yml'
+                sh 'ansible-playbook /home/ansible/recycleOTWS.yml'             
                 }
              }
         stage('restart OTWS1'){
             steps{
-                ansiblePlaybook  disableHostKeyChecking: true   playbook: 'recycleOTWS1.yml'
+                sh 'ansible-playbook /home/ansible/recycleOTWS1.yml' 
                     }
                 }
         stage('check healthcheck after restart OTWS'){
             steps{
                 timeout(time:2, unit: 'MINUTES') 
-                ansiblePlaybook  disableHostKeyChecking: true   playbook: 'healthcheck0.yml'
+                sh 'ansible-playbook /home/ansible/healthcheck0.yml' 
                     }
                 }
         stage('check healthcheck OTWS1'){
             steps{
                 timeout(time:1, unit: 'MINUTES') 
-                ansiblePlaybook  disableHostKeyChecking: true   playbook: 'healthcheck1.yml'
+                sh 'ansible-playbook /home/ansible/healthcheck1.yml' 
                     }
                 }
     }
