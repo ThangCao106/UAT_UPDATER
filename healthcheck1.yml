@@ -1,0 +1,29 @@
+- name: run script recycle MWFE
+  hosts: localhost
+  tasks:	
+    - name: Curl healcheck after restart
+      uri:
+        url:  http://192.168.54.69:8081/otws.asmx/FO_TF_COMMON_HealthCheck?
+        method: GET
+        return_content: yes
+        status_code: 200
+        body_format: json
+      register: otws_healthcheck_result
+    - name: print 
+      debug:
+        msg: "otws healthcheck: {{otws_healthcheck_result.content}}"
+    - name: get retcode
+      xml: 
+        xmlstring: "{{otws_healthcheck_result.content}}"
+        xpath: /ResultObject/RetCode
+        content: text
+      register: otwsretcode
+    - name: print retcode value
+      debug:
+        msg: "{{otwsretcode.matches}}"
+      register: otwsretcode0
+    - name: replace retcode format
+      debug:
+        msg: "{{otwsretcode.matches | regex_replace(\\:.*[\\](\\d+)[\\])}}"
+      register: otwsretcode1  
+ 

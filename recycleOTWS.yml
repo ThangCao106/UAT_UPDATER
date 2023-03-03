@@ -1,0 +1,6 @@
+- name: run script recycle MWFE5 OTWS1
+  hosts: win-mwfe
+  tasks:
+    - win_shell: D:\Scripts\Recycle_OTWS.bat
+      args:
+        executable: cmd
