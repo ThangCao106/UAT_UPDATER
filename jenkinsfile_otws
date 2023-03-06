@@ -6,22 +6,10 @@ pipeline {
                 sh 'ansible-playbook /home/ansible/recycleOTWS.yml'             
                 }
              }
-        stage('restart OTWS1'){
-            steps{
-                timeout(time:1, unit: 'MINUTES') 
-                sh 'ansible-playbook /home/ansible/recycleOTWS1.yml' 
-                    }
-                }
         stage('check healthcheck after restart OTWS'){
             steps{
                 timeout(time:2, unit: 'MINUTES') 
                 sh 'ansible-playbook /home/ansible/healthcheck0.yml' 
-                    }
-                }
-        stage('check healthcheck OTWS1'){
-            steps{
-                timeout(time:1, unit: 'MINUTES') 
-               sh 'ansible-playbook /home/ansible/healthcheck1.yml' 
                     }
                 }
     }
