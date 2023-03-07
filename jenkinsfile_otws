@@ -9,8 +9,8 @@ pipeline {
 
                 def userInput = input( id: 'userInput', message: 'Chon nhanh OTWS can restart:?', 
                  parameters: [
-                 string(defaultValue: 'None', description: 'Nhanh can restart', name: 'Nhanh')
-                 choice(name: 'Type', choices: ['0', '1', 'all'], description: 'Choose the enviornment') 
+                    string(defaultValue: 'None', description: 'Nhanh can restart', name: 'Nhanh'),
+                    choice(name: 'Type', choices: ['0', '1', 'all'], description: 'chọn OTWS cần restart') 
                 ])
                 inputNhanh = userInput.Nhanh?:''
                 inputType = userInput.Type?:''
