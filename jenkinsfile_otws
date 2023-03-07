@@ -19,30 +19,52 @@ pipeline {
                 }
             }
         }
-            // stage('restart OTWS'){
-            //             steps{
-            //                     if ($inputNhanh =='5') {
-            //                         sh 'echo "Restart nhanh 5 OTWS"'                                
-            //                         if ($inputType == '0') {
-            //                         sh 'ansible-playbook /home/ansible/recycleOTWS.yml' 
-            //                         }
-            //                         if ($inputType == '1') {
-            //                         sh 'ansible-playbook /home/ansible/recycleOTWS1.yml'
-            //                             } else{
-            //                             sh' echo "Lua chon khong hop le."'
-            //                             }
-            //                     }
-            //                     else{
-            //                         sh' echo "Lua chon khong hop le."'
-            //                     }
-            //                 }
-            //             }
-            //         stage('check healthcheck after restart OTWS'){
-            //             steps{
-            //                 timeout(time:2, unit: 'MINUTES') 
-            //                 sh 'ansible-playbook /home/ansible/healthcheck0.yml' 
-            //                     }
-            //                 }
+            stage('restart OTWS0 nhanh 5'){
+                 when {
+                    allOf {
+                        expression {params.Nhanh == "5"};
+                        expression {params.Type == '0'}
+                        }
+                    }
+                steps{
+                        sh 'ansible-playbook /home/ansible/recycleOTWS.yml' 
+                    }
+            }
+            stage('restart OTWS1 nhanh 5'){
+                 when {
+                    allOf {
+                        expression {params.Nhanh == "5"};
+                        expression {params.Type == '1'}
+                        }
+                    }
+                steps{
+                        sh 'ansible-playbook /home/ansible/recycleOTWS1.yml' 
+                    }
+            }
+            stage('restart all OTWS nhanh 5'){
+                 when {
+                    allOf {
+                        expression {params.Nhanh == "5"};
+                        expression {params.Type == 'all'}
+                        }
+                    }
+                steps{
+                        sh 'ansible-playbook /home/ansible/recycleOTWS.yml' 
+                        sh 'ansible-playbook /home/ansible/recycleOTWS1.yml' 
+                    }
+            }
+
+                                
+                //  else{
+                //      sh' echo "Lua chon khong hop le."'
+                //       }
+                           
+                    stage('check healthcheck after restart OTWS'){
+                        steps{
+                            timeout(time:2, unit: 'MINUTES') 
+                            sh 'ansible-playbook /home/ansible/healthcheck0.yml' 
+                                }
+                            }
              }
         }
  
