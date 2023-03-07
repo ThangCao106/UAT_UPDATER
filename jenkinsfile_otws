@@ -47,10 +47,11 @@ pipeline {
                         sh 'ansible-playbook /home/ansible/recycleOTWS.yml' 
                         sh 'ansible-playbook /home/ansible/recycleOTWS1.yml' 
                     }
-                    else{
-                                        sh' echo "Lua chon khong hop le."'
-                             }   
-                }
+             }
+             else{
+                    sh' echo "Lua chon khong hop le."'
+              }   
+                
           
             }
     }
