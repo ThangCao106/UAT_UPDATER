@@ -29,7 +29,7 @@ pipeline {
                                 }
                                 if ($inputnameOTWS == '1'){
                                    sh 'ansible-playbook /home/ansible/recycleOTWS1.yml'
-                                 else{
+                                }else{
                                     sh' echo "Lua chon khong hop le."'
                                 }
                             }
