@@ -4,45 +4,45 @@ pipeline {
          stage("input OTWS") {
             steps {
                 script {
-                def inputnameNhanh
-                def inputnameOTWS
+                def inputNhanh
+                def inputType
 
                 def userInput = input( id: 'userInput', message: 'Chon nhanh OTWS can restart:?', 
                  parameters: [
-                 [$class: 'TextParameterDefinition', defaultValue: 'None', description: 'Nhanh can restart', name: 'nameNhanh', choices: "1\n2\n3\n4\n5\nAll"],
-                 [$class: 'TextParameterDefinition', defaultValue: 'None', description: 'Loai OTWS', name: 'nameOTWS', choices: "OTWS\nOTWS1\nAll"]
+                 string(defaultValue: 'None', description: 'Nhanh can restart', name: 'Nhanh')
+                 choice(name: 'Type', choices: ['0', '1', 'all'], description: 'Choose the enviornment') 
                 ])
-                inputnameNhanh = userInput.nameNhanh?:''
-                inputnameOTWS = userInput.nameOTWS?:''
-                echo ("Nhanh OTWS restart: ${inputnameNhanh}")
-                echo ("Loai OTWS restart: ${inputnameOTWS}")             
+                inputNhanh = userInput.Nhanh?:''
+                inputType = userInput.Type?:''
+                echo ("Nhanh OTWS restart: ${inputNhanh}")
+                echo ("Loai OTWS restart: ${inputType}")             
                 }
             }
         }
-            stage('restart OTWS'){
-                        steps{
-                                if ($inputnameNhanh =='5') {
-                                    sh 'echo "Restart nhanh 5 OTWS"'                                
-                                    if ($inputnameOTWS == '0') {
-                                    sh 'ansible-playbook /home/ansible/recycleOTWS.yml' 
-                                    }
-                                    if ($inputnameOTWS == '1') {
-                                    sh 'ansible-playbook /home/ansible/recycleOTWS1.yml'
-                                        } else{
-                                        sh' echo "Lua chon khong hop le."'
-                                        }
-                                }
-                                else{
-                                    sh' echo "Lua chon khong hop le."'
-                                }
-                            }
-                        }
-                    stage('check healthcheck after restart OTWS'){
-                        steps{
-                            timeout(time:2, unit: 'MINUTES') 
-                            sh 'ansible-playbook /home/ansible/healthcheck0.yml' 
-                                }
-                            }
-            }
+            // stage('restart OTWS'){
+            //             steps{
+            //                     if ($inputNhanh =='5') {
+            //                         sh 'echo "Restart nhanh 5 OTWS"'                                
+            //                         if ($inputType == '0') {
+            //                         sh 'ansible-playbook /home/ansible/recycleOTWS.yml' 
+            //                         }
+            //                         if ($inputType == '1') {
+            //                         sh 'ansible-playbook /home/ansible/recycleOTWS1.yml'
+            //                             } else{
+            //                             sh' echo "Lua chon khong hop le."'
+            //                             }
+            //                     }
+            //                     else{
+            //                         sh' echo "Lua chon khong hop le."'
+            //                     }
+            //                 }
+            //             }
+            //         stage('check healthcheck after restart OTWS'){
+            //             steps{
+            //                 timeout(time:2, unit: 'MINUTES') 
+            //                 sh 'ansible-playbook /home/ansible/healthcheck0.yml' 
+            //                     }
+            //                 }
+            // }
         }
  
