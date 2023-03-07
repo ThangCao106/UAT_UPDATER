@@ -1,7 +1,7 @@
 pipeline {  
     agent any
     stages {
-         stage("input OTWS") {
+         stage('input OTWS') {
             steps {
                 script {
                 def inputNhanh
@@ -21,7 +21,7 @@ pipeline {
                 }
             }
          stage('restart OTWS nhanh 5') {
-            if ($inputNhanh =='5') {
+            if (${inputNhanh} =='5') {
                     when {
                         allOf {
                             expression {params.Type == '0'}
