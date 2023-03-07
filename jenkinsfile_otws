@@ -20,33 +20,33 @@ pipeline {
                     }
                 }
             }
-            stage('restart OTWS nhanh 5'){
+         stage('restart OTWS nhanh 5') {
             if ($inputNhanh =='5') {
-                 when {
-                    allOf {
-                        expression {params.Type == '0'}
+                    when {
+                        allOf {
+                            expression {params.Type == '0'}
+                            }
                         }
-                    }
-                steps{
-                        sh 'ansible-playbook /home/ansible/recycleOTWS.yml' 
-                    }
-                when {
-                    allOf {
-                        expression {params.Type == '1'}
+                    steps{
+                            sh 'ansible-playbook /home/ansible/recycleOTWS.yml' 
                         }
-                    }
-                steps{
-                        sh 'ansible-playbook /home/ansible/recycleOTWS1.yml' 
-                    }
-                 when {
-                    allOf {
-                        expression {params.Type == 'all'}
+                    when {
+                        allOf {
+                            expression {params.Type == '1'}
+                            }
                         }
-                    }
-                steps{
-                        sh 'ansible-playbook /home/ansible/recycleOTWS.yml' 
-                        sh 'ansible-playbook /home/ansible/recycleOTWS1.yml' 
-                    }
+                    steps{
+                            sh 'ansible-playbook /home/ansible/recycleOTWS1.yml' 
+                        }
+                    when {
+                        allOf {
+                            expression {params.Type == 'all'}
+                            }
+                        }
+                    steps{
+                            sh 'ansible-playbook /home/ansible/recycleOTWS.yml' 
+                            sh 'ansible-playbook /home/ansible/recycleOTWS1.yml' 
+                        }
              }
              else{
                     sh' echo "Lua chon khong hop le."'
