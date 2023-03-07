@@ -1,0 +1,8 @@
+ansible_user: tfeansible
+ansible_password: Tfe@Ansible
+ansible_port: 5986
+ansible_connection: winrm
+ansible_winrm_cert_pem: /etc/ansible/certs/cert.pem
+ansible_winrm_cert_key_pem: /etc/ansible/certs/cert_key.pem
+ansible_winrm_transport: basic
+ansible_winrm_server_cert_validation: ignore

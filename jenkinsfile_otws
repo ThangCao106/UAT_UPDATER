@@ -1,7 +1,25 @@
 pipeline {  
     agent any
     stages {
-        stage('restart OTWS'){
+         stage("input OTWS") {
+            steps {
+                script {
+                def inputnameNhanh
+                def inputnameOTWS
+
+                def userInput = input( id: 'userInput', message: 'Chon nhanh OTWS can restart:?', 
+                 parameters: [
+                 [$class: 'TextParameterDefinition', defaultValue: 'None', description: 'Nhanh can restart', name: 'nameNhanh', choices: "1\n2\n3\n4\n5\nAll"],
+                 [$class: 'TextParameterDefinition', defaultValue: 'None', description: 'Loai OTWS', name: 'nameOTWS', choices: "OTWS\nOTWS1\nAll"]
+                ])
+                inputnameNhanh = userInput.nameNhanh?:''
+                inputnameOTWS = userInput.nameOTWS?:''
+                echo ("Nhanh OTWS restart: ${inputnameNhanh}"])
+                echo ("Loai OTWS restart: ${inputnameOTWS}")             
+                }
+            }
+        }
+        /* stage('restart OTWS'){
             steps{
                 sh 'ansible-playbook /home/ansible/recycleOTWS.yml'             
                 }
@@ -21,8 +39,8 @@ pipeline {
         stage('check healthcheck OTWS1'){
             steps{
                 timeout(time:1, unit: 'MINUTES') 
-               sh 'ansible-playbook /home/ansible/healthcheck1.yml' 
+               sh 'ansible-playbook /home/ansible/healthcheck1.yml ' 
                     }
-                }
+                } */
     }
 }
