@@ -22,7 +22,7 @@ pipeline {
             stage('restart OTWS'){
                         steps{
 
-                                if ($inputnameNhanh=5) {
+                                if ($inputnameNhanh='5') {
                                     sh 'echo "Restart nhanh 5 OTWS"'
                                     sh 'ansible-playbook /home/ansible/recycleOTWS.yml'
                                 } else{
