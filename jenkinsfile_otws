@@ -5,27 +5,31 @@ pipeline {
             steps {
                 script {
                 def inputnameNhanh
-//                def inputnameOTWS
+                def inputnameOTWS
 
                 def userInput = input( id: 'userInput', message: 'Chon nhanh OTWS can restart:?', 
                  parameters: [
                  [$class: 'TextParameterDefinition', defaultValue: 'None', description: 'Nhanh can restart', name: 'nameNhanh', choices: "1\n2\n3\n4\n5\nAll"],
-//    [$class: 'TextParameterDefinition', defaultValue: 'None', description: 'Loai OTWS', name: 'nameOTWS', choices: "OTWS\nOTWS1\nAll"]
+                 [$class: 'TextParameterDefinition', defaultValue: 'None', description: 'Loai OTWS', name: 'nameOTWS', choices: "OTWS\nOTWS1\nAll"]
                 ])
                 inputnameNhanh = userInput.nameNhanh?:''
-//                inputnameOTWS = userInput.nameOTWS?:''
+                inputnameOTWS = userInput.nameOTWS?:''
                 echo ("Nhanh OTWS restart: ${inputnameNhanh}")
-//                echo ("Loai OTWS restart: ${inputnameOTWS}")             
+                echo ("Loai OTWS restart: ${inputnameOTWS}")             
                 }
             }
         }
             stage('restart OTWS'){
                         steps{
-
-                                if ($inputnameNhanh='5') {
+                                if ($inputnameNhanh =='5') {
                                     sh 'echo "Restart nhanh 5 OTWS"'
-                                    sh 'ansible-playbook /home/ansible/recycleOTWS.yml'
-                                } else{
+                                }
+                                if ($inputnameOTWS == '0'){
+                                   sh 'ansible-playbook /home/ansible/recycleOTWS.yml' 
+                                }
+                                if ($inputnameOTWS == '1'){
+                                   sh 'ansible-playbook /home/ansible/recycleOTWS1.yml'
+                                 else{
                                     sh' echo "Lua chon khong hop le."'
                                 }
                             }
