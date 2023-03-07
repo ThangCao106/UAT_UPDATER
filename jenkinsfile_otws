@@ -43,6 +43,6 @@ pipeline {
             //                 sh 'ansible-playbook /home/ansible/healthcheck0.yml' 
             //                     }
             //                 }
-            // }
+             }
         }
  
