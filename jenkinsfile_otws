@@ -22,14 +22,17 @@ pipeline {
             stage('restart OTWS'){
                         steps{
                                 if ($inputnameNhanh =='5') {
-                                    sh 'echo "Restart nhanh 5 OTWS"'
+                                    sh 'echo "Restart nhanh 5 OTWS"'                                
+                                    if ($inputnameOTWS == '0') {
+                                    sh 'ansible-playbook /home/ansible/recycleOTWS.yml' 
+                                    }
+                                    if ($inputnameOTWS == '1') {
+                                    sh 'ansible-playbook /home/ansible/recycleOTWS1.yml'
+                                        } else{
+                                        sh' echo "Lua chon khong hop le."'
+                                        }
                                 }
-                                if ($inputnameOTWS == '0'){
-                                   sh 'ansible-playbook /home/ansible/recycleOTWS.yml' 
-                                }
-                                if ($inputnameOTWS == '1'){
-                                   sh 'ansible-playbook /home/ansible/recycleOTWS1.yml'
-                                }else{
+                                else{
                                     sh' echo "Lua chon khong hop le."'
                                 }
                             }
