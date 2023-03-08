@@ -35,7 +35,7 @@ pipeline {
                         sh 'ansible-playbook /home/ansible/recycleOTWS.yml'
                     }
                 }
-                stage('restart OTWS0 nhanh 5'){
+                stage('restart OTWS1 nhanh 5'){
                     when {
                      expression {params.Type == '1'}
                     }
@@ -43,7 +43,7 @@ pipeline {
                         sh 'ansible-playbook /home/ansible/recycleOTWS1.yml'
                     }
                 }
-                stage('restart all OTWS0 nhanh 5'){
+                stage('restart all OTWS nhanh 5'){
                     when {
                      expression {params.Type == 'all'}
                     }
