@@ -8,9 +8,11 @@ pipeline {
     stages {
          stage('input OTWS') {
             steps {
-                script {             
-                echo ("Nhanh OTWS restart:" params.Nhanh)
-                echo ("Loai OTWS restart:" params.Type) 
+                script {     
+                def inputNhanh= params.Nhanh
+                def inputType= params.Type
+                echo ("Nhanh OTWS restart: ${inputNhanh}")
+                echo ("Loai OTWS restart: ${inputType}") 
                     }
                 }
             }
