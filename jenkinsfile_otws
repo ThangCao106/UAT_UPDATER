@@ -9,7 +9,7 @@ def userInput = input(id: 'userInput', message: 'Chon nhanh OTWS can restart:?',
 pipeline {
     agent any
         environment {
-            Nhanh = ''
+            Nhanh = userInput(Nhanh)
             //Type = ''
      }
     stages {
@@ -18,7 +18,7 @@ pipeline {
                 script {
                     echo("Nhanh OTWS restart:" + userInput.Nhanh)
                     //echo("Loai OTWS restart:" +userInput.Type)
-                    env.Nhanh = userInput.Nhanh ?: ''
+                    //env.Nhanh = userInput.Nhanh ?: ''
                     //env.Type = userInput.Type ?: ''
                     inputNhanh = userInput.Nhanh ?: ''
                     //inputType = userInput.Type ?: ''
@@ -29,12 +29,13 @@ pipeline {
         }
 
         stage('restart OTWS nhanh 5') {
+            when {
+                    expression {env.Nhanh == '5' }
+                 }     
             steps {
-                if (${inputNhanh} == '5' ) {
                       echo ("Nhanh OTWS restart: ${inputNhanh}")
-                     //echo ("Loai OTWS restart: ${inputType}")
-                }
-
+                     echo ("Loai OTWS restart: ${inputType}")
+             }
             // stages  {
             //     stage('restart OTWS0 nhanh 5'){
             //         when {
@@ -68,12 +69,12 @@ pipeline {
             //         }
             //     }
             // }
+        }
 
-                 else {
-                     sh' echo "Lua chon khong hop le."'
-                      }
-                 }
-             }
+                //  else{
+                //      sh' echo "Lua chon khong hop le."'
+                //       }
+
     // stage('check healthcheck after restart OTWS'){
     //     steps{
     //         timeout(time:2, unit: 'MINUTES')
