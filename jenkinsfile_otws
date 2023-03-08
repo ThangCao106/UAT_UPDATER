@@ -29,12 +29,12 @@ pipeline {
         }
 
         stage('restart OTWS nhanh 5') {
-            if ('${inputNhanh}' == '5' ) {
             steps {
+                if ('${inputNhanh}' == '5' ) {
                       echo ("Nhanh OTWS restart: ${inputNhanh}")
                      //echo ("Loai OTWS restart: ${inputType}")
-             }
-            
+                }
+
             // stages  {
             //     stage('restart OTWS0 nhanh 5'){
             //         when {
@@ -68,8 +68,8 @@ pipeline {
             //         }
             //     }
             // }
-            
-                } else{
+
+                } else {
                      sh' echo "Lua chon khong hop le."'
                       }
              }
