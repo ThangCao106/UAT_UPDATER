@@ -30,7 +30,7 @@ pipeline {
 
         stage('restart OTWS nhanh 5') {
             when {
-                    expression {{inputNhanh} == '5' }
+                    expression {${inputNhanh} == '5' }
                  }
             stages  {
                 stage('restart OTWS0 nhanh 5'){
