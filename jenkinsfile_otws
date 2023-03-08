@@ -10,8 +10,8 @@ pipeline {
 
                 def userInput = input( id: 'userInput', message: 'Chon nhanh OTWS can restart:?', 
                  parameters: [
-                    string(defaultValue: 'None', description: 'Nhanh can restart', name: 'Nhanh'),
-                    //choice(name: 'Nhanh', choices: ['0', '1','2','3','4','5','all'], description: 'Nhanh can restart'),
+                    //string(defaultValue: 'None', description: 'Nhanh can restart', name: 'Nhanh'),
+                    choice(name: 'Nhanh', choices: ['0', '1','2','3','4','5','all'], description: 'Nhanh can restart'),
                     choice(name: 'Type', choices: ['0', '1', 'all'], description: 'chọn OTWS cần restart') 
                 ])
                 inputNhanh = userInput.Nhanh?:''
@@ -26,7 +26,10 @@ pipeline {
          stage('restart OTWS nhanh 5') {
                     when {
                         allOf {
-                            expression {params.Nhanh=='5' && params.Type == '0'}
+                            expression {
+                                params.Nhanh=='5' }
+                            expression { 
+                                params.Type == '0'}
                             }
                         }
                     steps{
@@ -37,7 +40,10 @@ pipeline {
          stage('restart OTWS1 nhanh 5') {               
                     when {
                         allOf {
-                            expression {params.Nhanh=='5' && params.Type == '1'}
+                            expression {
+                                params.Nhanh=='5' }
+                            expression { 
+                                params.Type == '1'}
                             }
                         }
                     steps{
@@ -47,7 +53,10 @@ pipeline {
             stage('restart all OTWS nhanh 5') {  
                     when {
                         allOf {
-                            expression {params.Nhanh=='5' && params.Type == 'all'}
+                            expression {
+                                params.Nhanh=='5' }
+                            expression { 
+                                params.Type == 'all'}
                             }
                         }
                     steps{
