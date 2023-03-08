@@ -30,12 +30,12 @@ pipeline {
 
         stage('restart OTWS nhanh 5') {
             when {
-                    expression {${inputNhanh} == '5' }
+                    expression {'${inputNhanh}' == '5' }
                  }
             stages  {
                 stage('restart OTWS0 nhanh 5'){
                     when {
-                     expression {${inputType} == '0'}
+                     expression {'${inputType}' == '0'}
                     }
                     steps {
                         echo ("Nhanh OTWS restart: ${inputNhanh}")
@@ -45,7 +45,7 @@ pipeline {
                 }
                 stage('restart OTWS1 nhanh 5'){
                     when {
-                        expression {${inputType} == '1'}
+                        expression {'${inputType}' == '1'}
                     }
                     steps {
                         echo ("Nhanh OTWS restart: ${inputNhanh}")
@@ -55,7 +55,7 @@ pipeline {
                 }
                 stage('restart all OTWS nhanh 5'){
                     when {
-                     expression {${inputType} == 'all'}
+                     expression {'${inputType}' == 'all'}
                     }
                     steps {
                         echo ("Nhanh OTWS restart: ${inputNhanh}")
