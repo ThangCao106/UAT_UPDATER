@@ -1,5 +1,6 @@
 pipeline {  
     agent any
+
     stages {
          stage('input OTWS') {
             steps {
@@ -16,31 +17,37 @@ pipeline {
                 inputNhanh = userInput.Nhanh?:''
                 inputType = userInput.Type?:''
                 echo ("Nhanh OTWS restart: ${inputNhanh}")
-                echo ("Loai OTWS restart: ${inputType}")             
+                echo ("Loai OTWS restart: ${inputType}") 
+
                     }
                 }
             }
+            
          stage('restart OTWS nhanh 5') {
-            if (${inputNhanh} =='5') {
                     when {
                         allOf {
-                            expression {params.Type == '0'}
+                            expression {params.Nhanh==5 && params.Type == '0'}
                             }
                         }
                     steps{
                             sh 'ansible-playbook /home/ansible/recycleOTWS.yml' 
                         }
+             }
+
+         stage('restart OTWS1 nhanh 5') {               
                     when {
                         allOf {
-                            expression {params.Type == '1'}
+                            expression {params.Nhanh==5 && params.Type == '1'}
                             }
                         }
                     steps{
                             sh 'ansible-playbook /home/ansible/recycleOTWS1.yml' 
                         }
+            }
+            stage('restart all OTWS nhanh 5') {  
                     when {
                         allOf {
-                            expression {params.Type == 'all'}
+                            expression {params.Nhanh==5 && params.Type == 'all'}
                             }
                         }
                     steps{
@@ -48,12 +55,9 @@ pipeline {
                             sh 'ansible-playbook /home/ansible/recycleOTWS1.yml' 
                         }
              }
-             else{
-                    sh' echo "Lua chon khong hop le."'
-              }   
-                
+            
           
-            }
+            
              
                 //  else{
                 //      sh' echo "Lua chon khong hop le."'
