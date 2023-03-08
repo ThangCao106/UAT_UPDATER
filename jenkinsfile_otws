@@ -29,6 +29,8 @@ pipeline {
         }
 
         stage('restart OTWS nhanh 5') {
+            echo ("Nhanh OTWS restart: ${inputNhanh}")
+            echo ("Loai OTWS restart: ${inputType}")
             when {
                     expression {'${inputNhanh}' == '5' }
                  }
