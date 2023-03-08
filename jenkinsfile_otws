@@ -26,7 +26,7 @@ pipeline {
          stage('restart OTWS nhanh 5') {
                     when {
                         allOf {
-                            expression {params.Nhanh==5 && params.Type == '0'}
+                            expression {params.Nhanh=='5' && params.Type == '0'}
                             }
                         }
                     steps{
@@ -37,7 +37,7 @@ pipeline {
          stage('restart OTWS1 nhanh 5') {               
                     when {
                         allOf {
-                            expression {params.Nhanh==5 && params.Type == '1'}
+                            expression {params.Nhanh=='5' && params.Type == '1'}
                             }
                         }
                     steps{
@@ -47,7 +47,7 @@ pipeline {
             stage('restart all OTWS nhanh 5') {  
                     when {
                         allOf {
-                            expression {params.Nhanh==5 && params.Type == 'all'}
+                            expression {params.Nhanh=='5' && params.Type == 'all'}
                             }
                         }
                     steps{
