@@ -8,10 +8,10 @@ def userInput = input(id: 'userInput', message: 'Chon nhanh OTWS can restart:?',
                 ])
 pipeline {
     agent any
-        environment {
-            Nhanh = userInput.Nhanh?: ''
-            //Type = ''
-     }
+    //     environment {
+    //         Nhanh = userInput.Nhanh?: ''
+    //         //Type = ''
+    //  }
     stages {
         stage('input OTWS') {
             steps {
@@ -22,7 +22,7 @@ pipeline {
                     //env.Type = userInput.Type ?: ''
                     inputNhanh = userInput.Nhanh ?: ''
                     //inputType = userInput.Type ?: ''
-                    echo("Nhanh OTWS restart: " + env.Nhanh)
+                    echo("Nhanh OTWS restart: ${ inputNhanh}" )
                    // echo("Loai OTWS restart:" + env.Type)
                 }
             }
@@ -30,11 +30,11 @@ pipeline {
 
         stage('restart OTWS nhanh 5') {
             when {
-                    expression {env.Nhanh == '5' }
+                    expression {equals expected: '5', userInput.Nhanh }
                  }     
             steps {
-                      echo ("Nhanh OTWS restart: ${inputNhanh}")
-                     echo ("Loai OTWS restart: ${inputType}")
+                    echo ("Nhanh OTWS restart: ${inputNhanh}")
+                    //echo ("Loai OTWS restart: ${inputType}")
              }
             // stages  {
             //     stage('restart OTWS0 nhanh 5'){
