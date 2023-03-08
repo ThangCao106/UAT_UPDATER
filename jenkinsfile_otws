@@ -1,15 +1,17 @@
 pipeline {
     agent any
+
     stages {
         stage('input OTWS') {
             steps {
                 script {
                     def inputNhanh
                     def inputType
+
                     def userInput = input(id: 'userInput', message: 'Chon nhanh OTWS can restart:?',
                  parameters: [
-                    string(defaultValue: 'None', description: 'Nhanh can restart', name: 'Nhanh'),
-                    //choice(name: 'Nhanh', choices: ['0', '1','2','3','4','5','all'], description: 'Nhanh can restart'),
+                    //string(defaultValue: 'None', description: 'Nhanh can restart', name: 'Nhanh'),
+                    choice(name: 'Nhanh', choices: ['0', '1', '2', '3', '4', '5', 'all'], description: 'Nhanh can restart'),
                     choice(name: 'Type', choices: ['0', '1', 'all'], description: 'chọn OTWS cần restart')
                 ])
                     inputNhanh = userInput.Nhanh ?: ''
@@ -19,50 +21,59 @@ pipeline {
                 }
             }
         }
+
         stage('restart OTWS nhanh 5') {
-            steps {
-                if (${ inputNhanh } == '5') {
                     when {
                         allOf {
-                            expression { params.Type == '0' }
+                            expression {
+                                params.Nhanh == '5' }
+                            expression {
+                                params.Type == '0'}
                         }
                     }
                     steps {
-                            sh 'ansible-playbook /home/ansible/recycleOTWS.yml'
+                sh 'ansible-playbook /home/ansible/recycleOTWS.yml'
                     }
+        }
+
+        stage('restart OTWS1 nhanh 5') {
                     when {
                         allOf {
-                            expression { params.Type == '1' }
+                            expression {
+                                params.Nhanh == '5' }
+                            expression {
+                                params.Type == '1'}
                         }
                     }
                     steps {
-                            sh 'ansible-playbook /home/ansible/recycleOTWS1.yml'
+                sh 'ansible-playbook /home/ansible/recycleOTWS1.yml'
                     }
+        }
+            stage('restart all OTWS nhanh 5') {
                     when {
                         allOf {
-                            expression { params.Type == 'all' }
+                            expression {
+                                params.Nhanh == '5' }
+                            expression {
+                                params.Type == 'all'}
                         }
                     }
                     steps {
-                            sh 'ansible-playbook /home/ansible/recycleOTWS.yml'
-                            sh 'ansible-playbook /home/ansible/recycleOTWS1.yml'
+                sh 'ansible-playbook /home/ansible/recycleOTWS.yml'
+                sh 'ansible-playbook /home/ansible/recycleOTWS1.yml'
                     }
             }
-             else {
-                    sh' echo "Lua chon khong hop le."'
-             }
-        }
-    }
 
                 //  else{
                 //      sh' echo "Lua chon khong hop le."'
                 //       }
 
-// stage('check healthcheck after restart OTWS'){
-//     steps{
-//         timeout(time:2, unit: 'MINUTES')
-//         sh 'ansible-playbook /home/ansible/healthcheck0.yml'
-//             }
-//         }
+    // stage('check healthcheck after restart OTWS'){
+    //     steps{
+    //         timeout(time:2, unit: 'MINUTES')
+    //         sh 'ansible-playbook /home/ansible/healthcheck0.yml'
+    //             }
+    //         }
+    }
 }
-        }
+
