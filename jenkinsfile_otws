@@ -9,7 +9,7 @@ def userInput = input(id: 'userInput', message: 'Chon nhanh OTWS can restart:?',
 pipeline {
     agent any
         environment {
-            Nhanh = userInput(Nhanh)
+            Nhanh = userInput.Nhanh
             //Type = ''
      }
     stages {
