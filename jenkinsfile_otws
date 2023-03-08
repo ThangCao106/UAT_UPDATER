@@ -1,64 +1,65 @@
 def inputNhanh
 def inputType
-pipeline {
-    agent any
-    environment {
-        Nhanh = ${inputNhanh}
-        Type = ${inputType}
-    }
-    stages {
-        stage('input OTWS') {
-            steps {
-                script {
-                    def userInput = input(id: 'userInput', message: 'Chon nhanh OTWS can restart:?',
+def userInput = input(id: 'userInput', message: 'Chon nhanh OTWS can restart:?',
                  parameters: [
                     //string(defaultValue: 'None', description: 'Nhanh can restart', name: 'Nhanh'),
                     choice(name: 'Nhanh', choices: ['0', '1', '2', '3', '4', '5', 'all'], description: 'Nhanh can restart'),
                     choice(name: 'Type', choices: ['0', '1', 'all'], description: 'chọn OTWS cần restart')
                 ])
-
+pipeline {
+    agent any
+    environment {
+        //Nhanh = '${inputNhanh}'
+        //Type = '${inputType}'
+    }
+    stages {
+        stage('input OTWS') {
+            steps {
+                script {
                     echo("Nhanh OTWS restart:" + userInput.Nhanh)
                     echo("Loai OTWS restart:" +userInput.Type)
+                    //env.Nhanh = userInput.Nhanh ?: ''
+                   // env.Type = userInput.Type ?: ''
                     inputNhanh = userInput.Nhanh ?: ''
-                    inputType= userInput.Type ?: ''
-                    echo ("Nhanh OTWS restart: ${inputNhanh}")
-                    echo ("Loai OTWS restart: ${inputType}")
+                    inputType = userInput.Type ?: ''
+                    echo("Nhanh OTWS restart: ${inputNhanh}")
+                    echo("Loai OTWS restart: ${inputType}")
                 }
             }
         }
 
         stage('restart OTWS nhanh 5') {
             when {
-                    expression {env.Nhanh == '5' }
+                    expression {{inputNhanh} == '5' }
                  }
             stages  {
                 stage('restart OTWS0 nhanh 5'){
                     when {
-                     expression {env.Type == '0'}
+                     expression {${inputType} == '0'}
                     }
                     steps {
-                        echo ("Nhanh OTWS restart:" + env.Nhanh)
-                        echo ("Loai OTWS restart: "+ env.Type)
+                        echo ("Nhanh OTWS restart: ${inputNhanh}")
+                        echo ("Loai OTWS restart: ${inputType}")
                         sh 'ansible-playbook /home/ansible/recycleOTWS.yml'
                     }
                 }
                 stage('restart OTWS1 nhanh 5'){
                     when {
-                        expression {env.Type == '1'}
+                        expression {${inputType} == '1'}
                     }
                     steps {
-                        echo ("Nhanh OTWS restart:" + env.Nhanh)
-                        echo ("Loai OTWS restart: "+ env.Type)
+                        echo ("Nhanh OTWS restart: ${inputNhanh}")
+                        echo ("Loai OTWS restart: ${inputType}")
                         sh 'ansible-playbook /home/ansible/recycleOTWS1.yml'
                     }
                 }
                 stage('restart all OTWS nhanh 5'){
                     when {
-                     expression {env.Type == 'all'}
+                     expression {${inputType} == 'all'}
                     }
                     steps {
-                        echo ("Nhanh OTWS restart:" + env.Nhanh)
-                        echo ("Loai OTWS restart: "+ env.Type)
+                        echo ("Nhanh OTWS restart: ${inputNhanh}")
+                        echo ("Loai OTWS restart: ${inputType}")
                         sh 'ansible-playbook /home/ansible/recycleOTWS.yml'
                         sh 'ansible-playbook /home/ansible/recycleOTWS1.yml'
                     }
