@@ -23,46 +23,37 @@ pipeline {
         }
 
         stage('restart OTWS nhanh 5') {
+            when {
+                    expression { params.Nhanh == '5' }
+                 }
+            stages  {
+                stage('restart OTWS0 nhanh 5'){
                     when {
-                        allOf {
-                            expression {
-                                params.Nhanh == '5' }
-                            expression {
-                                params.Type == '0'}
-                        }
+                     expression {params.Type == '0'}
                     }
                     steps {
-                sh 'ansible-playbook /home/ansible/recycleOTWS.yml'
+                        sh 'ansible-playbook /home/ansible/recycleOTWS.yml'
                     }
-        }
-
-        stage('restart OTWS1 nhanh 5') {
+                }
+                stage('restart OTWS0 nhanh 5'){
                     when {
-                        allOf {
-                            expression {
-                                params.Nhanh == '5' }
-                            expression {
-                                params.Type == '1'}
-                        }
+                     expression {params.Type == '1'}
                     }
                     steps {
-                sh 'ansible-playbook /home/ansible/recycleOTWS1.yml'
+                        sh 'ansible-playbook /home/ansible/recycleOTWS1.yml'
                     }
-        }
-            stage('restart all OTWS nhanh 5') {
+                }
+                stage('restart all OTWS0 nhanh 5'){
                     when {
-                        allOf {
-                            expression {
-                                params.Nhanh == '5' }
-                            expression {
-                                params.Type == 'all'}
-                        }
+                     expression {params.Type == 'all'}
                     }
                     steps {
-                sh 'ansible-playbook /home/ansible/recycleOTWS.yml'
-                sh 'ansible-playbook /home/ansible/recycleOTWS1.yml'
+                        sh 'ansible-playbook /home/ansible/recycleOTWS.yml'
+                        sh 'ansible-playbook /home/ansible/recycleOTWS1.yml'
                     }
+                }
             }
+        }
 
                 //  else{
                 //      sh' echo "Lua chon khong hop le."'
