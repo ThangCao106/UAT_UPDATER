@@ -16,8 +16,8 @@ pipeline {
                 ])
                     env.Nhanh = userInput.Nhanh ?: ''
                     env.Type = userInput.Type ?: ''
-                    echo("Nhanh OTWS restart" )
-                    echo("Loai OTWS restart: ")
+                    echo("Nhanh OTWS restart:" + env.Nhanh )
+                    echo("Loai OTWS restart:" + env.Type)
                 }
             }
         }
@@ -32,6 +32,8 @@ pipeline {
                      expression {env.Type == '0'}
                     }
                     steps {
+                        echo("Nhanh OTWS restart:" + env.Nhanh )
+                        echo("Loai OTWS restart:" + env.Type)
                         sh 'ansible-playbook /home/ansible/recycleOTWS.yml'
                     }
                 }
@@ -40,6 +42,8 @@ pipeline {
                      expression {env.Type == '1'}
                     }
                     steps {
+                        echo("Nhanh OTWS restart:" + env.Nhanh )
+                        echo("Loai OTWS restart:" + env.Type)
                         sh 'ansible-playbook /home/ansible/recycleOTWS1.yml'
                     }
                 }
@@ -48,6 +52,8 @@ pipeline {
                      expression {env.Type == 'all'}
                     }
                     steps {
+                        echo("Nhanh OTWS restart:" + env.Nhanh )
+                        echo("Loai OTWS restart:" + env.Type)
                         sh 'ansible-playbook /home/ansible/recycleOTWS.yml'
                         sh 'ansible-playbook /home/ansible/recycleOTWS1.yml'
                     }
