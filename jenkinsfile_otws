@@ -8,56 +8,53 @@ pipeline {
     stages {
          stage('input OTWS') {
             steps {
-                script {     
-                def inputNhanh= params.Nhanh
-                def inputType= params.Type
-                echo ("Nhanh OTWS restart: ${inputNhanh}")
-                echo ("Loai OTWS restart: ${inputType}") 
+                echo ("Nhanh OTWS restart: 5 ")
+                echo ("Loai OTWS restart: 1") 
                     }
                 }
             }
             
-         stage('restart OTWS nhanh 5') {
-                    when {
-                        allOf {
-                            expression {
-                                params.Nhanh=='5' }
-                            expression { 
-                                params.Type == '0'}
-                            }
-                        }
-                    steps{
-                            sh 'ansible-playbook /home/ansible/recycleOTWS.yml' 
-                        }
-             }
+        //  stage('restart OTWS nhanh 5') {
+        //             when {
+        //                 allOf {
+        //                     expression {
+        //                         params.Nhanh=='5' }
+        //                     expression { 
+        //                         params.Type == '0'}
+        //                     }
+        //                 }
+        //             steps{
+        //                     sh 'ansible-playbook /home/ansible/recycleOTWS.yml' 
+        //                 }
+        //      }
 
-         stage('restart OTWS1 nhanh 5') {               
-                    when {
-                        allOf {
-                            expression {
-                                params.Nhanh=='5' }
-                            expression { 
-                                params.Type == '1'}
-                            }
-                        }
-                    steps{
-                            sh 'ansible-playbook /home/ansible/recycleOTWS1.yml' 
-                        }
-            }
-            stage('restart all OTWS nhanh 5') {  
-                    when {
-                        allOf {
-                            expression {
-                                params.Nhanh=='5' }
-                            expression { 
-                                params.Type == 'all'}
-                            }
-                        }
-                    steps{
-                            sh 'ansible-playbook /home/ansible/recycleOTWS.yml' 
-                            sh 'ansible-playbook /home/ansible/recycleOTWS1.yml' 
-                        }
-             }
+        //  stage('restart OTWS1 nhanh 5') {               
+        //             when {
+        //                 allOf {
+        //                     expression {
+        //                         params.Nhanh=='5' }
+        //                     expression { 
+        //                         params.Type == '1'}
+        //                     }
+        //                 }
+        //             steps{
+        //                     sh 'ansible-playbook /home/ansible/recycleOTWS1.yml' 
+        //                 }
+        //     }
+        //     stage('restart all OTWS nhanh 5') {  
+        //             when {
+        //                 allOf {
+        //                     expression {
+        //                         params.Nhanh=='5' }
+        //                     expression { 
+        //                         params.Type == 'all'}
+        //                     }
+        //                 }
+        //             steps{
+        //                     sh 'ansible-playbook /home/ansible/recycleOTWS.yml' 
+        //                     sh 'ansible-playbook /home/ansible/recycleOTWS1.yml' 
+        //                 }
+        //      }
             
           
             
