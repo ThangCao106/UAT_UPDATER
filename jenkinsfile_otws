@@ -30,7 +30,7 @@ pipeline {
 
         stage('restart OTWS nhanh 5') {
             when {
-                    equals expected: '5', userInput.Nhanh
+                    expression {userInput.Nhanh == 'all'}
                  }     
             steps {
                     echo ("Nhanh OTWS restart: ${inputNhanh}")
