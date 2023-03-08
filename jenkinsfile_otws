@@ -30,7 +30,7 @@ pipeline {
 
         stage('restart OTWS nhanh 5') {
             steps {
-                if (${inputNhanh} = '5' ) {
+                if (${inputNhanh} == '5' ) {
                       echo ("Nhanh OTWS restart: ${inputNhanh}")
                      //echo ("Loai OTWS restart: ${inputType}")
                 }
