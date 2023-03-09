@@ -41,7 +41,7 @@ pipeline {
                             }
                         }
                         steps{
-                                sh 'ansible-playbook /home/ansible/5.recycleOTWS.yml '
+                                sh 'ansible-playbook /home/ansible/5recycleOTWS.yml'
                         }
             }
 
@@ -53,7 +53,7 @@ pipeline {
                             }
                         }
                         steps{
-                                sh 'ansible-playbook /home/ansible/5.recycleOTWS1.yml'
+                                sh 'ansible-playbook /home/ansible/5recycleOTWS1.yml'
                         }
             }
                 stage('restart all OTWS nhanh 5') {
@@ -64,8 +64,8 @@ pipeline {
                             }
                         }
                         steps{
-                                sh 'ansible-playbook /home/ansible/5.recycleOTWS.yml '
-                                sh 'ansible-playbook /home/ansible/5.recycleOTWS1.yml '
+                                sh 'ansible-playbook /home/ansible/5recycleOTWS.yml '
+                                sh 'ansible-playbook /home/ansible/5recycleOTWS1.yml '
                         }
                 }
                 stage('check healthcheck after restart OTWS'){
@@ -80,7 +80,7 @@ pipeline {
                                 echo "Waiting for 1 minutes..."
                                 sleep time: 60, unit: 'SECONDS'
                             }
-                            sh 'ansible-playbook /home/ansible/5.healthcheck0.yml' 
+                            sh 'ansible-playbook /home/ansible/5healthcheck0.yml' 
                                  }
                           }    
                 stage('check healthcheck after restart OTWS1'){
@@ -95,7 +95,7 @@ pipeline {
                                 echo "Waiting for 1 minutes..."
                                 sleep time: 60, unit: 'SECONDS'
                             }
-                            sh 'ansible-playbook /home/ansible/5.healthcheck1.yml' 
+                            sh 'ansible-playbook /home/ansible/5healthcheck1.yml' 
                                  }
                           }
                     stage('check healthcheck after restart OTWS và OTWS1'){
@@ -110,8 +110,8 @@ pipeline {
                                 echo "Waiting for 1 minutes..."
                                 sleep time: 60, unit: 'SECONDS'
                             }
-                            sh 'ansible-playbook /home/ansible/5.healthcheck0.yml' 
-                            sh 'ansible-playbook /home/ansible/5.healthcheck1.yml' 
+                            sh 'ansible-playbook /home/ansible/5healthcheck0.yml' 
+                            sh 'ansible-playbook /home/ansible/5healthcheck1.yml' 
                                  }
                           }
             }
