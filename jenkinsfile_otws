@@ -28,7 +28,7 @@ pipeline {
 
                         }
                     }
-                }
+                
             stage('Show input values') {
                     steps {
                 
