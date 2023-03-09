@@ -1,6 +1,9 @@
 pipeline {  
     agent any
-
+    environment {
+    inputNhanh = ""
+    inputType = ""
+    }
     stages {
          stage('input OTWS') {
             steps {
@@ -14,11 +17,11 @@ pipeline {
                     choice(name: 'Nhanh', choices: ['0', '1','2','3','4','5','all'], description: 'Nhanh can restart'),
                     choice(name: 'Type', choices: ['0', '1', 'all'], description: 'chọn OTWS cần restart') 
                 ])
-                inputNhanh = userInput.Nhanh?:''
-                inputType = userInput.Type?:''
-                echo ("Nhanh OTWS restart: ${inputNhanh}")
+                env.inputNhanh = userInput.Nhanh?:''
+                env.inputType = userInput.Type?:''
+                echo ("Nhanh OTWS restart: ${env.inputNhanh}")
                 echo ("Loai OTWS restart: ${inputType}") 
-
+             
                     }
                 }
             }
@@ -26,8 +29,8 @@ pipeline {
          stage('restart OTWS nhanh 5') {
                     when {
                         allOf {
-                             expression { inputNhanh == '5' }
-                             expression { inputType == '1' }
+                             expression { env.inputNhanh == '5' }
+                             expression { env.inputType == '1' }
                             }
                         }
                     steps{
@@ -38,8 +41,8 @@ pipeline {
          stage('restart OTWS1 nhanh 5') {               
                     when {
                         allOf {
-                            expression { inputNhanh == '5' }
-                            expression { inputType == '1' }
+                            expression { env.inputNhanh == '5' }
+                            expression { env.inputType == '1' }
                             }
                         }
                     steps{
@@ -49,8 +52,8 @@ pipeline {
             stage('restart all OTWS nhanh 5') {  
                     when {
                         allOf {
-                            expression { inputNhanh == '5' }
-                            expression { inputType == 'all' }
+                            expression { env.inputNhanh == '5' }
+                            expression { env.inputType == 'all' }
                             }
                         }
                     steps{
