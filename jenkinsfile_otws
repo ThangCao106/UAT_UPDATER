@@ -60,7 +60,7 @@ pipeline {
                 sh 'ansible-playbook /home/ansible/1recycleOTWS1.yml'
             }
             }
-                stage('restart all OTWS nhanh 5') {
+                stage('restart all OTWS nhanh 1') {
             when {
                 allOf {
                     expression { inputNhanh == '1' }
@@ -267,7 +267,7 @@ pipeline {
                 sh 'ansible-playbook /home/ansible/3healthcheck1.yml'
             }
                 }
-        stage('check healthcheck after restart OTWS và OTWS1 nhanh 2') {
+        stage('check healthcheck after restart OTWS và OTWS1 nhanh 3') {
             when {
                 allOf {
                     expression { inputNhanh == '3' }
