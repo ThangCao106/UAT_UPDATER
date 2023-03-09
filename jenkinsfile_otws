@@ -24,7 +24,7 @@ pipeline {
                 env.inputType = userInput.Type?:''
                 //echo("iput:   ${userInput}")
                 echo ("env Nhanh OTWS restart: ${ env.inputNhanh}" )
-                echo ("env Loai OTWS restart: $${ env.inputType}" ) 
+                echo ("env Loai OTWS restart: ${ env.inputType}" ) 
              
                     }
                 }
