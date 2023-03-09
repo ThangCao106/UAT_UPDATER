@@ -36,8 +36,8 @@ pipeline {
             stage('restart OTWS nhanh 5') {
                         when {
                             allOf {
-                                expression { ${inputNhanh} == '5' }
-                                expression { ${ inputType} == '1' }
+                                expression { inputNhanh == '5' }
+                                expression { inputType == '1' }
                             }
                         }
                         steps{
