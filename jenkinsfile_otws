@@ -28,13 +28,12 @@ pipeline {
             }
         }
 
-        stage('restart OTWS nhanh 5') {
-            when {
-                    expression { return userInput.Nhanh == '5'}
-                 }     
+        stage('restart OTWS nhanh 5') {        
             steps {
+                if ( $(inputNhanh)== '5'){
                     echo ("Nhanh OTWS restart: ${inputNhanh}")
                     //echo ("Loai OTWS restart: ${inputType}")
+                }
              }
             // stages  {
             //     stage('restart OTWS0 nhanh 5'){
