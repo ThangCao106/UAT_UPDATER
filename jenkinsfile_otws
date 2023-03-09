@@ -48,7 +48,7 @@ pipeline {
                 echo 'restart OTWS nhanh 1 thanh cong!'
                 }
             }
-
+            }
             stage('restart OTWS1 nhanh 1') {
             when {
                 allOf {
