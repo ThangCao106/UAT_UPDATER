@@ -5,8 +5,7 @@ pipeline {
             stage('input OTWS') {
                 steps {
                     script {
-                    //def inputNhanh
-                    //def inputType
+                    
                     def userInput = input( id: 'userInput', message: 'Chon nhanh OTWS can restart:?', 
                     parameters: [
                         //string(defaultValue: 'None', description: 'Nhanh can restart', name: 'Nhanh'),
@@ -16,20 +15,25 @@ pipeline {
                     
                     echo ("Nhanh OTWS restart:" + userInput.Nhanh)
                     echo ("Loai OTWS restart: " + userInput.Type) 
-                    withEnv(['inputNhanh='+userInput.Nhanh, 'inputType='+userInput.Type]) 
-                            {
-                            //echo("iput:   ${userInput}")
-                            echo ("env Nhanh OTWS restart: ${env.inputNhanh}" )
-                            echo ("env Loai OTWS restart: ${ env.inputType}" ) 
-                            }
+                    // withEnv(['inputNhanh='+userInput.Nhanh, 'inputType='+userInput.Type]) 
+                    //         {
+                    //         //echo("iput:   ${userInput}")
+                    //         echo ("env Nhanh OTWS restart: ${env.inputNhanh}" )
+                    //         echo ("env Loai OTWS restart: ${ env.inputType}" ) 
+                    def inputNhanh = userInput.Nhanh ?: ''
+                    def inputType= userInput.Type ?: ''
+                      }
+                     cho ("env Nhanh OTWS restart: ${inputNhanh}" )
+                    /echo ("env Loai OTWS restart: ${ inputType}" ) 
+
                         }
                     }
                 }
             stage('Show input values') {
                     steps {
                 
-                        echo ("inputNhanh: ${env.inputNhanh}")
-                        echo ("inputtype: " + userInput.Type) 
+                        echo ("inputNhanh: ${inputNhanh}")
+                        echo ("inputtype: ${ inputType}" ) 
                       }
                     }   
             stage('restart OTWS nhanh 5') {
