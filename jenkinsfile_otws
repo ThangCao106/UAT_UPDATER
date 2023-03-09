@@ -1,11 +1,8 @@
 
 pipeline {  
     agent any
-    environment {
-    inputNhanh = ""
-    inputType = ""
-    }
     stages {
+       sequential {
          stage('input OTWS') {
             steps {
                 script {
@@ -70,8 +67,8 @@ pipeline {
                             sh 'echo "restart OTWS1 nhanh 5" '  
                         }
              }
-            
-       }
+        } 
+    }
  }      
             
              
