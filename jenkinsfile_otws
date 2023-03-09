@@ -76,8 +76,11 @@ pipeline {
                                 }
                             }
                     steps{
-                            timeout(time:2, unit: 'MINUTES') 
-                            sh 'ansible-playbook /home/ansible/healthcheck0.yml' 
+                            script {
+                                echo "Waiting for 2 minutes..."
+                                sleep time: 120, unit: 'SECONDS'
+                            }
+                            sh 'ansible-playbook /home/ansible/healthcheck1.yml' 
                                  }
                           }
             }
