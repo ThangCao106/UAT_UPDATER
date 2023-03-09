@@ -45,7 +45,7 @@ pipeline {
             }
             post {
                 success {
-                echo 'restart OTWS nhanh 1 thanh cong!'
+                    echo 'restart OTWS nhanh 1 thanh cong!'
                 }
             }
             }
@@ -58,6 +58,10 @@ pipeline {
             }
             steps {
                 sh 'ansible-playbook /home/ansible/1recycleOTWS1.yml'
+            }post {
+                success {
+                    echo 'restart OTWS1 nhanh 1 thanh cong!'
+                }
             }
             }
                 stage('restart all OTWS nhanh 1') {
@@ -70,6 +74,11 @@ pipeline {
             steps {
                 sh 'ansible-playbook /home/ansible/1recycleOTWS.yml '
                 sh 'ansible-playbook /home/ansible/1recycleOTWS1.yml '
+            }post {
+                success {
+                    echo 'restart OTWS nhanh 1 thanh cong!'
+                    echo 'restart OTWS1 nhanh 1 thanh cong!'
+                }
             }
                 }
                 stage('check healthcheck after restart OTWS nhanh 1') {
@@ -85,6 +94,10 @@ pipeline {
                     sleep time: 60, unit: 'SECONDS'
                 }
                 sh 'ansible-playbook /home/ansible/5healthcheck0.yml'
+                    }post {
+                    success {
+                    echo 'check healthcheck OTWS nhanh 1 thanh cong!'
+                    }
                     }
                 }
                 stage('check healthcheck after restart OTWS1 nhanh 1') {
@@ -100,6 +113,10 @@ pipeline {
                     sleep time: 60, unit: 'SECONDS'
                 }
                 sh 'ansible-playbook /home/ansible/1healthcheck1.yml'
+            }post {
+                    success {
+                    echo 'check healthcheck OTWS1 nhanh 1 thanh cong!'
+                    }
             }
                 }
         stage('check healthcheck after restart OTWS và OTWS1 nhanh 1') {
@@ -116,6 +133,11 @@ pipeline {
                 }
                 sh 'ansible-playbook /home/ansible/1healthcheck0.yml'
                 sh 'ansible-playbook /home/ansible/1healthcheck1.yml'
+            }post {
+                    success {
+                    echo 'check healthcheck OTWS nhanh 1 thanh cong!'
+                    echo 'check healthcheck OTWS1 nhanh 1 thanh cong!'
+                    }
             }
         }
             //stage nhanh 2
@@ -128,9 +150,12 @@ pipeline {
             }
             steps {
                 sh 'ansible-playbook /home/ansible/2recycleOTWS.yml'
+            }post {
+                success {
+                    echo 'restart OTWS nhanh 2 thanh cong!'
+                }
             }
             }
-
             stage('restart OTWS1 nhanh 2') {
             when {
                 allOf {
@@ -140,6 +165,11 @@ pipeline {
             }
             steps {
                 sh 'ansible-playbook /home/ansible/2recycleOTWS1.yml'
+            }
+            post {
+                success {
+                    echo 'restart OTWS1 nhanh 2 thanh cong!'
+                }
             }
             }
                 stage('restart all OTWS nhanh 2') {
@@ -152,6 +182,11 @@ pipeline {
             steps {
                 sh 'ansible-playbook /home/ansible/2recycleOTWS.yml '
                 sh 'ansible-playbook /home/ansible/2recycleOTWS1.yml '
+            }post {
+                success {
+                    echo 'restart OTWS nhanh 2 thanh cong!'
+                    echo 'restart OTWS1 nhanh 2 thanh cong!'
+                }
             }
                 }
                 stage('check healthcheck after restart OTWS nhanh 2') {
@@ -167,6 +202,10 @@ pipeline {
                     sleep time: 60, unit: 'SECONDS'
                 }
                 sh 'ansible-playbook /home/ansible/2healthcheck0.yml'
+                    }post {
+                    success {
+                    echo 'check healthcheck OTWS nhanh 2 thanh cong!'
+                    }
                     }
                 }
                 stage('check healthcheck after restart OTWS1 nhanh 2') {
@@ -182,6 +221,10 @@ pipeline {
                     sleep time: 60, unit: 'SECONDS'
                 }
                 sh 'ansible-playbook /home/ansible/2healthcheck1.yml'
+            }post {
+                    success {
+                    echo 'check healthcheck OTWS1 nhanh 2 thanh cong!'
+                    }
             }
                 }
         stage('check healthcheck after restart OTWS và OTWS1 nhanh 2') {
@@ -198,6 +241,11 @@ pipeline {
                 }
                 sh 'ansible-playbook /home/ansible/2healthcheck0.yml'
                 sh 'ansible-playbook /home/ansible/2healthcheck1.yml'
+            }post {
+                    success {
+                    echo 'check healthcheck OTWS nhanh 2 thanh cong!'
+                    echo 'check healthcheck OTWS1 nhanh 2 thanh cong!'
+                    }
             }
         }
 
@@ -211,6 +259,10 @@ pipeline {
             }
             steps {
                 sh 'ansible-playbook /home/ansible/3recycleOTWS.yml'
+            }post {
+                success {
+                    echo 'restart OTWS nhanh 3 thanh cong!'
+                }
             }
             }
 
@@ -223,6 +275,10 @@ pipeline {
             }
             steps {
                 sh 'ansible-playbook /home/ansible/3recycleOTWS1.yml'
+            }post {
+                success {
+                    echo 'restart OTWS1 nhanh 3 thanh cong!'
+                }
             }
             }
                 stage('restart all OTWS nhanh 3') {
@@ -235,8 +291,14 @@ pipeline {
             steps {
                 sh 'ansible-playbook /home/ansible/3recycleOTWS.yml '
                 sh 'ansible-playbook /home/ansible/3recycleOTWS1.yml '
+            }post {
+                success {
+                    echo 'restart OTWS nhanh 3 thanh cong!'
+                    echo 'restart OTWS1 nhanh 3 thanh cong!'
+                }
             }
                 }
+
                 stage('check healthcheck after restart OTWS nhanh 3') {
                     when {
                 allOf {
@@ -250,6 +312,10 @@ pipeline {
                     sleep time: 60, unit: 'SECONDS'
                 }
                 sh 'ansible-playbook /home/ansible/3healthcheck0.yml'
+                    }post {
+                    success {
+                    echo 'check healthcheck OTWS nhanh 3 thanh cong!'
+                    }
                     }
                 }
                 stage('check healthcheck after restart OTWS1 nhanh 3') {
@@ -265,6 +331,10 @@ pipeline {
                     sleep time: 60, unit: 'SECONDS'
                 }
                 sh 'ansible-playbook /home/ansible/3healthcheck1.yml'
+             }post {
+                    success {
+                    echo 'check healthcheck OTWS1 nhanh 3 thanh cong!'
+                    }
             }
                 }
         stage('check healthcheck after restart OTWS và OTWS1 nhanh 3') {
@@ -281,6 +351,11 @@ pipeline {
                 }
                 sh 'ansible-playbook /home/ansible/3healthcheck0.yml'
                 sh 'ansible-playbook /home/ansible/3healthcheck1.yml'
+            }post {
+                    success {
+                    echo 'check healthcheck OTWS nhanh 3 thanh cong!'
+                    echo 'check healthcheck OTWS1 nhanh 3 thanh cong!'
+                    }
             }
         }
             //stage nhanh 4
@@ -293,6 +368,10 @@ pipeline {
             }
             steps {
                 sh 'ansible-playbook /home/ansible/4recycleOTWS.yml'
+            }post {
+                success {
+                    echo 'restart OTWS nhanh 4 thanh cong!'
+                }
             }
             }
 
@@ -305,6 +384,10 @@ pipeline {
             }
             steps {
                 sh 'ansible-playbook /home/ansible/4recycleOTWS1.yml'
+            }post {
+                success {
+                    echo 'restart OTWS1 nhanh 4 thanh cong!'
+                }
             }
             }
                 stage('restart all OTWS nhanh 4') {
@@ -317,6 +400,11 @@ pipeline {
             steps {
                 sh 'ansible-playbook /home/ansible/4recycleOTWS.yml '
                 sh 'ansible-playbook /home/ansible/4recycleOTWS1.yml '
+            }post {
+                success {
+                    echo 'restart OTWS nhanh 4 thanh cong!'
+                    echo 'restart OTWS1 nhanh 4 thanh cong!'
+                }
             }
                 }
                 stage('check healthcheck after restart OTWS nhanh 4') {
@@ -332,6 +420,10 @@ pipeline {
                     sleep time: 60, unit: 'SECONDS'
                 }
                 sh 'ansible-playbook /home/ansible/4healthcheck0.yml'
+                    }post {
+                    success {
+                    echo 'check healthcheck OTWS nhanh 4 thanh cong!'
+                    }
                     }
                 }
                 stage('check healthcheck after restart OTWS1 nhanh 4') {
@@ -347,6 +439,10 @@ pipeline {
                     sleep time: 60, unit: 'SECONDS'
                 }
                 sh 'ansible-playbook /home/ansible/4healthcheck1.yml'
+                }post {
+                    success {
+                    echo 'check healthcheck OTWS1 nhanh 4 thanh cong!'
+                    }
             }
                 }
         stage('check healthcheck after restart OTWS và OTWS1 nhanh 4') {
@@ -363,6 +459,11 @@ pipeline {
                 }
                 sh 'ansible-playbook /home/ansible/4healthcheck0.yml'
                 sh 'ansible-playbook /home/ansible/4healthcheck1.yml'
+            }post {
+                    success {
+                    echo 'check healthcheck OTWS nhanh 4 thanh cong!'
+                    echo 'check healthcheck OTWS1 nhanh 4 thanh cong!'
+                    }
             }
         }
             stage('restart OTWS nhanh 5') {
@@ -374,6 +475,11 @@ pipeline {
             }
             steps {
                 sh 'ansible-playbook /home/ansible/5recycleOTWS.yml'
+            }
+            post {
+                success {
+                    echo 'restart OTWS nhanh 5 thanh cong!'
+                }
             }
             }
             //stage nhanh 5
@@ -387,6 +493,11 @@ pipeline {
             steps {
                 sh 'ansible-playbook /home/ansible/5recycleOTWS1.yml'
             }
+            post {
+                success {
+                    echo 'restart OTWS1 nhanh 5 thanh cong!'
+                }
+            }
             }
                 stage('restart all OTWS nhanh 5') {
             when {
@@ -398,6 +509,11 @@ pipeline {
             steps {
                 sh 'ansible-playbook /home/ansible/5recycleOTWS.yml '
                 sh 'ansible-playbook /home/ansible/5recycleOTWS1.yml '
+            }post {
+                success {
+                    echo 'restart OTWS nhanh 5 thanh cong!'
+                    echo 'restart OTWS1 nhanh 5 thanh cong!'
+                }
             }
                 }
                 stage('check healthcheck after restart OTWS') {
@@ -413,6 +529,10 @@ pipeline {
                     sleep time: 60, unit: 'SECONDS'
                 }
                 sh 'ansible-playbook /home/ansible/5healthcheck0.yml'
+                    }post {
+                    success {
+                    echo 'check healthcheck OTWS nhanh 5 thanh cong!'
+                    }
                     }
                 }
                 stage('check healthcheck after restart OTWS1') {
@@ -428,6 +548,10 @@ pipeline {
                     sleep time: 60, unit: 'SECONDS'
                 }
                 sh 'ansible-playbook /home/ansible/5healthcheck1.yml'
+                }post {
+                    success {
+                    echo 'check healthcheck OTWS1 nhanh 5 thanh cong!'
+                    }
             }
                 }
         stage('check healthcheck after restart OTWS và OTWS1') {
@@ -444,6 +568,11 @@ pipeline {
                 }
                 sh 'ansible-playbook /home/ansible/5healthcheck0.yml'
                 sh 'ansible-playbook /home/ansible/5healthcheck1.yml'
+            }post {
+                    success {
+                    echo 'check healthcheck OTWS nhanh 5 thanh cong!'
+                    echo 'check healthcheck OTWS1 nhanh 5 thanh cong!'
+                    }
             }
         }
     }
