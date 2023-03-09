@@ -27,6 +27,7 @@ pipeline {
                 }
             stage('Show input values') {
                     steps {
+                        def inputNhanh = env.inputNhanh
                         echo "inputNhanh: ${inputNhanh}"
                         echo "inputType: ${inputType}"
                       }
