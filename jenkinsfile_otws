@@ -16,30 +16,31 @@ pipeline {
                     choice(name: 'Nhanh', choices: ['0', '1','2','3','4','5','all'], description: 'Nhanh can restart'),
                     choice(name: 'Type', choices: ['0', '1', 'all'], description: 'chọn OTWS cần restart') 
                 ])
-                environment {
-                                inputNhanh = ${userInput.Nhanh}
-                                inputType = ${userInput.Type}
-                            }
+                
                 //env.inputNhanh = userInput.Nhanh?:''
                 //env.inputType = userInput.Type?:''
                 //echo("iput:   ${userInput}")
-                echo ("Nhanh OTWS restart: ${env.inputNhanh}")
-                echo ("Loai OTWS restart: ${inputType}") 
+                echo ("Nhanh OTWS restart:" + userInput.Nhanh)
+                echo ("Loai OTWS restart: " + userInput.Type) 
              
                     }
                 }
             }
          stage('Show input values') {
+                environment {
+                                inputNhanh = ${userInput.Nhanh}
+                                inputType = ${userInput.Type}
+                            }
                 steps {
-                    echo "inputNhanh: ${env.inputNhanh}"
-                    echo "inputType: ${env.inputType}"
+                    echo "inputNhanh: ${inputNhanh}"
+                    echo "inputType: ${inputType}"
                 }
                 }   
          stage('restart OTWS nhanh 5') {
                     when {
                         allOf {
-                             expression { env.inputNhanh == '5' }
-                             expression { env.inputType == '1' }
+                             expression { inputNhanh == '5' }
+                             expression { inputType == '1' }
                             }
                         }
                     steps{
