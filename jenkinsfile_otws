@@ -48,7 +48,7 @@ pipeline {
                             }
                 }
 
-            stage('restart OTWS1 nhanh 5') {               
+            stage('restart OTWS1 nhanh 5') {
                         when {
                             allOf {
                                 expression { env.inputNhanh == '5' }
@@ -59,7 +59,7 @@ pipeline {
                                 sh 'echo "restart OTWS1 nhanh 5" ' 
                             }
                 }
-                stage('restart all OTWS nhanh 5') {  
+                stage('restart all OTWS nhanh 5') {
                         when {
                             allOf {
                                 expression { env.inputNhanh == '5' }
@@ -70,18 +70,6 @@ pipeline {
                                 sh 'echo "restart OTWS nhanh 5" '  
                                 sh 'echo "restart OTWS1 nhanh 5" '  
                             }
-                }        
+                }
     }
- }      
-            
-             
-                //  else{
-                //      sh' echo "Lua chon khong hop le."'
-                //       }
-                           
-                    // stage('check healthcheck after restart OTWS'){
-                    //     steps{
-                    //         timeout(time:2, unit: 'MINUTES') 
-                    //         sh 'ansible-playbook /home/ansible/healthcheck0.yml' 
-                    //             }
-                    //         }
+ }
