@@ -37,8 +37,8 @@ pipeline {
             }
          stage('Show input values') {
                 environment {
-                                inputNhanh = ${userInput.Nhanh}
-                                inputType = ${userInput.Type}
+                                inputNhanh = userInput.Nhanh
+                                inputType = userInput.Type
                             }
                 steps {
                     echo "inputNhanh: ${inputNhanh}"
