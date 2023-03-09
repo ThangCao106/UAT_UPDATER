@@ -71,8 +71,8 @@ pipeline {
                    stage('check healthcheck after restart OTWS'){
                     when {
                             allOf {
-                                expression { env.inputNhanh == '5' }
-                                expression { env.inputType == '1' }
+                                expression { inputNhanh == '5' }
+                                expression { inputType == '1' }
                                 }
                             }
                     steps{
