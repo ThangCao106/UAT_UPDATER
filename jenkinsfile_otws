@@ -16,7 +16,7 @@ pipeline {
         stage('input OTWS') {
             steps {
                 script {
-                    echo("Nhanh OTWS restart:" + params.Nhanh)
+                    echo("Nhanh OTWS restart:" + userInput.Nhanh)
                     //echo("Loai OTWS restart:" +userInput.Type)
                     //env.Nhanh = userInput.Nhanh ?: ''
                     //env.Type = userInput.Type ?: ''
@@ -30,7 +30,7 @@ pipeline {
 
         stage('restart OTWS nhanh 5') {        
             steps {
-                if (inputNhanh == '5'){
+                if (userInput.Nhanh == '5'){
                     echo ("Nhanh OTWS restart: ${inputNhanh}")
                     //echo ("Loai OTWS restart: ${inputType}")
                 } else{
