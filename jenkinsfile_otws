@@ -19,7 +19,7 @@ pipeline {
                     withEnv(['inputNhanh='+userInput.Nhanh, 'inputType='+userInput.Type]) 
                             {
                             //echo("iput:   ${userInput}")
-                            echo ("env Nhanh OTWS restart: ${ env.inputNhanh}" )
+                            echo ("env Nhanh OTWS restart: ${env.inputNhanh}" )
                             echo ("env Loai OTWS restart: ${ env.inputType}" ) 
                             }
                         }
@@ -27,8 +27,8 @@ pipeline {
                 }
             stage('Show input values') {
                     steps {
-                        def inputNhanh = env.inputNhanh
-                        echo "inputNhanh: ${inputNhanh}"
+                
+                        echo "inputNhanh: ${env.inputNhanh}"
                         echo "inputType: ${inputType}"
                       }
                     }   
