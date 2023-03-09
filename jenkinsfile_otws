@@ -14,16 +14,11 @@ pipeline {
 
                     echo ("Nhanh OTWS restart:" + userInput.Nhanh)
                     echo ("Loai OTWS restart: " + userInput.Type)
-                    // withEnv(['inputNhanh='+userInput.Nhanh, 'inputType='+userInput.Type])
-                    //         {
-                    //         //echo("iput:   ${userInput}")
-                    //         echo ("env Nhanh OTWS restart: ${env.inputNhanh}" )
-                    //         echo ("env Loai OTWS restart: ${ env.inputType}" )
                     def inputNhanh = userInput.Nhanh ?: ''
                     def inputType= userInput.Type ?: ''
                     }
-                     cho ("env Nhanh OTWS restart: ${inputNhanh}" )
-                    /echo ("env Loai OTWS restart: ${ inputType}" )
+                    echo ("env Nhanh OTWS restart: ${inputNhanh}" )
+                    echo ("env Loai OTWS restart: ${ inputType}" )
 
                     }
                 }
