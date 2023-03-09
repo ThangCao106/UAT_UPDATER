@@ -50,7 +50,7 @@ pipeline {
                     when {
                         allOf {
                             expression { inputNhanh == '5' }
-                            expression { inputType == '1' }
+                            expression { inputType == 'all' }
                             }
                         }
                     steps{
