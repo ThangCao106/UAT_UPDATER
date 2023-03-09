@@ -27,8 +27,8 @@ pipeline {
                 }
             stage('Show input values') {
                     steps {
-                        echo "inputNhanh: ${env.inputNhanh}"
-                        echo "inputType: ${env.inputType}"
+                        echo "inputNhanh: ${inputNhanh}"
+                        echo "inputType: ${inputType}"
                       }
                     }   
             stage('restart OTWS nhanh 5') {
