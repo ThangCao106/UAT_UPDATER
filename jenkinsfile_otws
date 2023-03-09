@@ -1,22 +1,28 @@
-def inputNhanh
-def inputType
-def userInput = input(id: 'userInput', message: 'Chon nhanh OTWS can restart:?',
-                 parameters: [
-                    //string(defaultValue: 'None', description: 'Nhanh can restart', name: 'Nhanh'),
-                    choice(name: 'Nhanh', choices: ['0', '1', '2', '3', '4', '5', 'all'], description: 'Nhanh can restart'),
-                    //choice(name: 'Type', choices: ['0', '1', 'all'], description: 'chọn OTWS cần restart')
-                ])
+// def inputNhanh
+// def inputType
+// def userInput = input(id: 'userInput', message: 'Chon nhanh OTWS can restart:?',
+//                  parameters: [
+//                     //string(defaultValue: 'None', description: 'Nhanh can restart', name: 'Nhanh'),
+//                     choice(name: 'Nhanh', choices: ['0', '1', '2', '3', '4', '5', 'all'], description: 'Nhanh can restart'),
+//                     //choice(name: 'Type', choices: ['0', '1', 'all'], description: 'chọn OTWS cần restart')
+//                 ])
 pipeline {
     agent any
     //     environment {
     //         Nhanh = userInput.Nhanh?: ''
     //         //Type = ''
     //  }
+    parameters: {
+    
+                    //string(defaultValue: 'None', description: 'Nhanh can restart', name: 'Nhanh'),
+                    choice(name: 'Nhanh', choices: ['0', '1', '2', '3', '4', '5', 'all'], description: 'Nhanh can restart'),
+                    //choice(name: 'Type', choices: ['0', '1', 'all'], description: 'chọn OTWS cần restart')
+                }
     stages {
         stage('input OTWS') {
             steps {
                 script {
-                    echo("Nhanh OTWS restart:" + userInput.Nhanh)
+                    echo("Nhanh OTWS restart:" + params.Nhanh)
                     //echo("Loai OTWS restart:" +userInput.Type)
                     //env.Nhanh = userInput.Nhanh ?: ''
                     //env.Type = userInput.Type ?: ''
@@ -30,7 +36,7 @@ pipeline {
 
         stage('restart OTWS nhanh 5') {
             when {
-                    expression { return userInput.Nhanh }
+                    expression { return params.Nhanh }
                  }     
             steps {
                     echo ("Nhanh OTWS restart: ${inputNhanh}")
