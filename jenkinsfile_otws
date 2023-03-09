@@ -2,72 +2,70 @@
 pipeline {  
     agent any
     stages {
-       sequential {
-         stage('input OTWS') {
-            steps {
-                script {
-                //def inputNhanh
-                //def inputType
-                def userInput = input( id: 'userInput', message: 'Chon nhanh OTWS can restart:?', 
-                 parameters: [
-                    //string(defaultValue: 'None', description: 'Nhanh can restart', name: 'Nhanh'),
-                    choice(name: 'Nhanh', choices: ['0', '1','2','3','4','5','all'], description: 'Nhanh can restart'),
-                    choice(name: 'Type', choices: ['0', '1', 'all'], description: 'chọn OTWS cần restart') 
-                ])
-                
-                 echo ("Nhanh OTWS restart:" + userInput.Nhanh)
-                 echo ("Loai OTWS restart: " + userInput.Type) 
-                 withEnv(['inputNhanh='+userInput.Nhanh, 'inputType='+userInput.Type]) 
-                         {
-                        //echo("iput:   ${userInput}")
-                        echo ("env Nhanh OTWS restart: ${ env.inputNhanh}" )
-                        echo ("env Loai OTWS restart: ${ env.inputType}" ) 
+            stage('input OTWS') {
+                steps {
+                    script {
+                    //def inputNhanh
+                    //def inputType
+                    def userInput = input( id: 'userInput', message: 'Chon nhanh OTWS can restart:?', 
+                    parameters: [
+                        //string(defaultValue: 'None', description: 'Nhanh can restart', name: 'Nhanh'),
+                        choice(name: 'Nhanh', choices: ['0', '1','2','3','4','5','all'], description: 'Nhanh can restart'),
+                        choice(name: 'Type', choices: ['0', '1', 'all'], description: 'chọn OTWS cần restart') 
+                    ])
+                    
+                    echo ("Nhanh OTWS restart:" + userInput.Nhanh)
+                    echo ("Loai OTWS restart: " + userInput.Type) 
+                    withEnv(['inputNhanh='+userInput.Nhanh, 'inputType='+userInput.Type]) 
+                            {
+                            //echo("iput:   ${userInput}")
+                            echo ("env Nhanh OTWS restart: ${ env.inputNhanh}" )
+                            echo ("env Loai OTWS restart: ${ env.inputType}" ) 
+                            }
                         }
                     }
                 }
-            }
-         stage('Show input values') {
-                steps {
-                    echo "inputNhanh: ${env.inputNhanh}"
-                    echo "inputType: ${env.inputType}"
+            stage('Show input values') {
+                    steps {
+                        echo "inputNhanh: ${env.inputNhanh}"
+                        echo "inputType: ${env.inputType}"
+                      }
+                    }   
+            stage('restart OTWS nhanh 5') {
+                        when {
+                            allOf {
+                                expression { env.inputNhanh == '5' }
+                                expression { env.inputType == '1' }
+                                }
+                            }
+                        steps{
+                                sh 'echo "restart OTWS nhanh 5" ' 
+                            }
                 }
-                }   
-         stage('restart OTWS nhanh 5') {
-                    when {
-                        allOf {
-                             expression { env.inputNhanh == '5' }
-                             expression { env.inputType == '1' }
-                            }
-                        }
-                    steps{
-                            sh 'echo "restart OTWS nhanh 5" ' 
-                        }
-             }
 
-         stage('restart OTWS1 nhanh 5') {               
-                    when {
-                        allOf {
-                            expression { env.inputNhanh == '5' }
-                            expression { env.inputType == '1' }
+            stage('restart OTWS1 nhanh 5') {               
+                        when {
+                            allOf {
+                                expression { env.inputNhanh == '5' }
+                                expression { env.inputType == '1' }
+                                }
                             }
-                        }
-                    steps{
-                            sh 'echo "restart OTWS1 nhanh 5" ' 
-                        }
-            }
-            stage('restart all OTWS nhanh 5') {  
-                    when {
-                        allOf {
-                            expression { env.inputNhanh == '5' }
-                            expression { env.inputType == 'all' }
+                        steps{
+                                sh 'echo "restart OTWS1 nhanh 5" ' 
                             }
-                        }
-                    steps{
-                            sh 'echo "restart OTWS nhanh 5" '  
-                            sh 'echo "restart OTWS1 nhanh 5" '  
-                        }
-             }
-        } 
+                }
+                stage('restart all OTWS nhanh 5') {  
+                        when {
+                            allOf {
+                                expression { env.inputNhanh == '5' }
+                                expression { env.inputType == 'all' }
+                                }
+                            }
+                        steps{
+                                sh 'echo "restart OTWS nhanh 5" '  
+                                sh 'echo "restart OTWS1 nhanh 5" '  
+                            }
+                }        
     }
  }      
             
