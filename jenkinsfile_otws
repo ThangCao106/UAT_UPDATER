@@ -37,35 +37,35 @@ pipeline {
                         when {
                             allOf {
                                 expression { inputNhanh == '5' }
-                                expression { inputType == '1' }
+                                expression { inputType == '0' }
                             }
                         }
                         steps{
-                                sh 'echo "restart OTWS nhanh 5" '
+                                sh 'ansible-playbook /home/ansible/recycleOTWS.yml '
                         }
             }
 
             stage('restart OTWS1 nhanh 5') {
                         when {
                             allOf {
-                                expression { env.inputNhanh == '5' }
-                                expression { env.inputType == '1' }
+                                expression { inputNhanh == '5' }
+                                expression { inputType == '1' }
                             }
                         }
                         steps{
-                                sh 'echo "restart OTWS1 nhanh 5" '
+                                sh 'ansible-playbook /home/ansible/recycleOTWS1.yml'
                         }
             }
                 stage('restart all OTWS nhanh 5') {
                         when {
                             allOf {
-                                expression { env.inputNhanh == '5' }
-                                expression { env.inputType == 'all' }
+                                expression { inputNhanh == '5' }
+                                expression { inputType == 'all' }
                             }
                         }
                         steps{
-                                sh 'echo "restart OTWS nhanh 5" '
-                                sh 'echo "restart OTWS1 nhanh 5" '
+                                sh 'ansible-playbook /home/ansible/recycleOTWS.yml '
+                                sh 'ansible-playbook /home/ansible/recycleOTWS1.yml '
                         }
                 }
             }
