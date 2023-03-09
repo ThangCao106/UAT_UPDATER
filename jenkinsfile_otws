@@ -31,7 +31,7 @@ pipeline {
                             }
                         }
                     steps{
-                            sh 'ansible-playbook /home/ansible/recycleOTWS.yml' 
+                            sh 'echo "restart OTWS nhanh 5" ' 
                         }
              }
 
@@ -43,7 +43,7 @@ pipeline {
                             }
                         }
                     steps{
-                            sh 'ansible-playbook /home/ansible/recycleOTWS1.yml' 
+                            sh 'echo "restart OTWS1 nhanh 5" ' 
                         }
             }
             stage('restart all OTWS nhanh 5') {  
@@ -54,8 +54,8 @@ pipeline {
                             }
                         }
                     steps{
-                            sh 'ansible-playbook /home/ansible/recycleOTWS.yml' 
-                            sh 'ansible-playbook /home/ansible/recycleOTWS1.yml' 
+                            sh 'echo "restart OTWS nhanh 5" '  
+                            sh 'echo "restart OTWS1 nhanh 5" '  
                         }
              }
             
