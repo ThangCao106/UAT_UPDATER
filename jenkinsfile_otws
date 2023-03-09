@@ -10,7 +10,6 @@ pipeline {
                 script {
                 def inputNhanh
                 def inputType
-
                 def userInput = input( id: 'userInput', message: 'Chon nhanh OTWS can restart:?', 
                  parameters: [
                     //string(defaultValue: 'None', description: 'Nhanh can restart', name: 'Nhanh'),
@@ -25,7 +24,12 @@ pipeline {
                     }
                 }
             }
-            
+         stage('Show input values') {
+                steps {
+                    echo "inputNhanh: ${env.inputNhanh}"
+                    echo "inputType: ${env.inputType}"
+                }
+                }   
          stage('restart OTWS nhanh 5') {
                     when {
                         allOf {
