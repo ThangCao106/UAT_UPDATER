@@ -10,8 +10,8 @@ def userInput = input( id: 'userInput', message: 'Chon nhanh OTWS can restart:?'
 pipeline {  
     agent any
     environment {
-    inputNhanh = ""
-    inputType = ""
+    inputNhanh = userInput.Nhanh
+    inputType = userInput.Type
     }
     stages {
          stage('input OTWS') {
@@ -37,8 +37,8 @@ pipeline {
             }
          stage('Show input values') {
                 environment {
-                                inputNhanh = userInput.Nhanh
-                                inputType = userInput.Type
+                                inputNhanh = 1
+                                inputType = 2
                             }
                 steps {
                     echo "inputNhanh: ${inputNhanh}"
