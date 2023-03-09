@@ -68,5 +68,17 @@ pipeline {
                                 sh 'ansible-playbook /home/ansible/recycleOTWS1.yml '
                         }
                 }
+                   stage('check healthcheck after restart OTWS'){
+                    when {
+                            allOf {
+                                expression { env.inputNhanh == '5' }
+                                expression { env.inputType == '1' }
+                                }
+                            }
+                    steps{
+                            timeout(time:2, unit: 'MINUTES') 
+                            sh 'ansible-playbook /home/ansible/healthcheck0.yml' 
+                                 }
+                          }
             }
     }
