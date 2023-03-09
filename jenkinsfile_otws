@@ -8,111 +8,443 @@ pipeline {
                 }
                 steps {
                     script {
-
-                    def userInput = input( id: 'userInput', message: 'Chon nhanh OTWS can restart:?',
+                    def userInput = input(id: 'userInput', message: 'Chon nhanh OTWS can restart:?',
                     parameters: [
                         //string(defaultValue: 'None', description: 'Nhanh can restart', name: 'Nhanh'),
-                        choice(name: 'Nhanh', choices: ['0', '1','2','3','4','5','all'], description: 'Nhanh can restart'),
+                        choice(name: 'Nhanh', choices: ['0', '1', '2', '3', '4', '5', 'all'], description: 'Nhanh can restart'),
                         choice(name: 'Type', choices: ['0', '1', 'all'], description: 'chọn OTWS cần restart')
                     ])
 
-                    echo ("Nhanh OTWS restart:" + userInput.Nhanh)
-                    echo ("Loai OTWS restart: " + userInput.Type)
+                    echo('Nhanh OTWS restart:' + userInput.Nhanh)
+                    echo('Loai OTWS restart: ' + userInput.Type)
                     inputNhanh = userInput.Nhanh ?: ''
-                    inputType= userInput.Type ?: ''
-                    echo ("env Nhanh OTWS restart: ${inputNhanh}" )
-                    echo ("env Loai OTWS restart: ${ inputType}" )
-                    }
+                    inputType = userInput.Type ?: ''
+                    echo("env Nhanh OTWS restart: ${inputNhanh}")
+                    echo("env Loai OTWS restart: ${ inputType}")
                     }
                 }
-
-            stage('Show input values') {
-                    steps {
-
-                        echo ("inputNhanh: ${inputNhanh}")
-                        echo ("inputtype: ${ inputType}" )
-                    }
-            }
-            stage('restart OTWS nhanh 5') {
-                        when {
-                            allOf {
-                                expression { inputNhanh == '5' }
-                                expression { inputType == '0' }
-                            }
-                        }
-                        steps{
-                                sh 'ansible-playbook /home/ansible/5recycleOTWS.yml'
-                        }
             }
 
-            stage('restart OTWS1 nhanh 5') {
-                        when {
-                            allOf {
-                                expression { inputNhanh == '5' }
-                                expression { inputType == '1' }
-                            }
-                        }
-                        steps{
-                                sh 'ansible-playbook /home/ansible/5recycleOTWS1.yml'
-                        }
+            // stage('Show input values') {
+            //         steps {
+
+            //             echo ("inputNhanh: ${inputNhanh}")
+            //             echo ("inputtype: ${ inputType}" )
+            //         }
+            // }
+            //stage nhanh 1
+            stage('restart OTWS nhanh 1') {
+            when {
+                allOf {
+                    expression { inputNhanh == '1' }
+                    expression { inputType == '0' }
+                }
+            }
+            steps {
+                sh 'ansible-playbook /home/ansible/1recycleOTWS.yml'
+            }
+            post {
+                success {
+                echo 'restart OTWS nhanh 1 thanh cong!'
+                }
+            }
+
+            stage('restart OTWS1 nhanh 1') {
+            when {
+                allOf {
+                    expression { inputNhanh == '1' }
+                    expression { inputType == '1' }
+                }
+            }
+            steps {
+                sh 'ansible-playbook /home/ansible/1recycleOTWS1.yml'
+            }
             }
                 stage('restart all OTWS nhanh 5') {
-                        when {
-                            allOf {
-                                expression { inputNhanh == '5' }
-                                expression { inputType == 'all' }
-                            }
-                        }
-                        steps{
-                                sh 'ansible-playbook /home/ansible/5recycleOTWS.yml '
-                                sh 'ansible-playbook /home/ansible/5recycleOTWS1.yml '
-                        }
+            when {
+                allOf {
+                    expression { inputNhanh == '1' }
+                    expression { inputType == 'all' }
                 }
-                stage('check healthcheck after restart OTWS'){
-                    when {
-                            allOf {
-                                expression { inputNhanh == '5' }
-                                expression { inputType == '0' }
-                                }
-                            }
-                    steps{
-                            script {
-                                echo "Waiting for 1 minutes..."
-                                sleep time: 60, unit: 'SECONDS'
-                            }
-                            sh 'ansible-playbook /home/ansible/5healthcheck0.yml' 
-                                 }
-                          }    
-                stage('check healthcheck after restart OTWS1'){
-                        when {
-                            allOf {
-                                expression { inputNhanh == '5' }
-                                expression { inputType == '1' }
-                                }
-                            }
-                        steps{
-                            script {
-                                echo "Waiting for 1 minutes..."
-                                sleep time: 60, unit: 'SECONDS'
-                            }
-                            sh 'ansible-playbook /home/ansible/5healthcheck1.yml' 
-                                 }
-                          }
-                    stage('check healthcheck after restart OTWS và OTWS1'){
-                        when {
-                            allOf {
-                                expression { inputNhanh == '5' }
-                                expression { inputType == '1' }
-                                }
-                            }
-                        steps{
-                            script {
-                                echo "Waiting for 1 minutes..."
-                                sleep time: 60, unit: 'SECONDS'
-                            }
-                            sh 'ansible-playbook /home/ansible/5healthcheck0.yml' 
-                            sh 'ansible-playbook /home/ansible/5healthcheck1.yml' 
-                                 }
-                          }
             }
+            steps {
+                sh 'ansible-playbook /home/ansible/1recycleOTWS.yml '
+                sh 'ansible-playbook /home/ansible/1recycleOTWS1.yml '
+            }
+                }
+                stage('check healthcheck after restart OTWS nhanh 1') {
+                    when {
+                allOf {
+                    expression { inputNhanh == '1' }
+                    expression { inputType == '0' }
+                }
+                    }
+                    steps {
+                script {
+                    echo 'Waiting for 1 minutes...'
+                    sleep time: 60, unit: 'SECONDS'
+                }
+                sh 'ansible-playbook /home/ansible/5healthcheck0.yml'
+                    }
+                }
+                stage('check healthcheck after restart OTWS1 nhanh 1') {
+            when {
+                allOf {
+                    expression { inputNhanh == '1' }
+                    expression { inputType == '1' }
+                }
+            }
+            steps {
+                script {
+                    echo 'Waiting for 1 minutes...'
+                    sleep time: 60, unit: 'SECONDS'
+                }
+                sh 'ansible-playbook /home/ansible/1healthcheck1.yml'
+            }
+                }
+        stage('check healthcheck after restart OTWS và OTWS1 nhanh 1') {
+            when {
+                allOf {
+                    expression { inputNhanh == '1' }
+                    expression { inputType == 'all' }
+                }
+            }
+            steps {
+                script {
+                    echo 'Waiting for 1 minutes...'
+                    sleep time: 60, unit: 'SECONDS'
+                }
+                sh 'ansible-playbook /home/ansible/1healthcheck0.yml'
+                sh 'ansible-playbook /home/ansible/1healthcheck1.yml'
+            }
+        }
+            //stage nhanh 2
+            stage('restart OTWS nhanh 2') {
+            when {
+                allOf {
+                    expression { inputNhanh == '2' }
+                    expression { inputType == '0' }
+                }
+            }
+            steps {
+                sh 'ansible-playbook /home/ansible/2recycleOTWS.yml'
+            }
+            }
+
+            stage('restart OTWS1 nhanh 2') {
+            when {
+                allOf {
+                    expression { inputNhanh == '2' }
+                    expression { inputType == '1' }
+                }
+            }
+            steps {
+                sh 'ansible-playbook /home/ansible/2recycleOTWS1.yml'
+            }
+            }
+                stage('restart all OTWS nhanh 2') {
+            when {
+                allOf {
+                    expression { inputNhanh == '2' }
+                    expression { inputType == 'all' }
+                }
+            }
+            steps {
+                sh 'ansible-playbook /home/ansible/2recycleOTWS.yml '
+                sh 'ansible-playbook /home/ansible/2recycleOTWS1.yml '
+            }
+                }
+                stage('check healthcheck after restart OTWS nhanh 2') {
+                    when {
+                allOf {
+                    expression { inputNhanh == '2' }
+                    expression { inputType == '0' }
+                }
+                    }
+                    steps {
+                script {
+                    echo 'Waiting for 1 minutes...'
+                    sleep time: 60, unit: 'SECONDS'
+                }
+                sh 'ansible-playbook /home/ansible/2healthcheck0.yml'
+                    }
+                }
+                stage('check healthcheck after restart OTWS1 nhanh 2') {
+            when {
+                allOf {
+                    expression { inputNhanh == '2' }
+                    expression { inputType == '1' }
+                }
+            }
+            steps {
+                script {
+                    echo 'Waiting for 1 minutes...'
+                    sleep time: 60, unit: 'SECONDS'
+                }
+                sh 'ansible-playbook /home/ansible/2healthcheck1.yml'
+            }
+                }
+        stage('check healthcheck after restart OTWS và OTWS1 nhanh 2') {
+            when {
+                allOf {
+                    expression { inputNhanh == '2' }
+                    expression { inputType == 'all' }
+                }
+            }
+            steps {
+                script {
+                    echo 'Waiting for 1 minutes...'
+                    sleep time: 60, unit: 'SECONDS'
+                }
+                sh 'ansible-playbook /home/ansible/2healthcheck0.yml'
+                sh 'ansible-playbook /home/ansible/2healthcheck1.yml'
+            }
+        }
+
+            //stage nhanh 3
+            stage('restart OTWS nhanh 3') {
+            when {
+                allOf {
+                    expression { inputNhanh == '3' }
+                    expression { inputType == '0' }
+                }
+            }
+            steps {
+                sh 'ansible-playbook /home/ansible/3recycleOTWS.yml'
+            }
+            }
+
+            stage('restart OTWS1 nhanh 3') {
+            when {
+                allOf {
+                    expression { inputNhanh == '3' }
+                    expression { inputType == '1' }
+                }
+            }
+            steps {
+                sh 'ansible-playbook /home/ansible/3recycleOTWS1.yml'
+            }
+            }
+                stage('restart all OTWS nhanh 3') {
+            when {
+                allOf {
+                    expression { inputNhanh == '3' }
+                    expression { inputType == 'all' }
+                }
+            }
+            steps {
+                sh 'ansible-playbook /home/ansible/3recycleOTWS.yml '
+                sh 'ansible-playbook /home/ansible/3recycleOTWS1.yml '
+            }
+                }
+                stage('check healthcheck after restart OTWS nhanh 3') {
+                    when {
+                allOf {
+                    expression { inputNhanh == '3' }
+                    expression { inputType == '0' }
+                }
+                    }
+                    steps {
+                script {
+                    echo 'Waiting for 1 minutes...'
+                    sleep time: 60, unit: 'SECONDS'
+                }
+                sh 'ansible-playbook /home/ansible/3healthcheck0.yml'
+                    }
+                }
+                stage('check healthcheck after restart OTWS1 nhanh 3') {
+            when {
+                allOf {
+                    expression { inputNhanh == '3' }
+                    expression { inputType == '1' }
+                }
+            }
+            steps {
+                script {
+                    echo 'Waiting for 1 minutes...'
+                    sleep time: 60, unit: 'SECONDS'
+                }
+                sh 'ansible-playbook /home/ansible/3healthcheck1.yml'
+            }
+                }
+        stage('check healthcheck after restart OTWS và OTWS1 nhanh 2') {
+            when {
+                allOf {
+                    expression { inputNhanh == '3' }
+                    expression { inputType == 'all' }
+                }
+            }
+            steps {
+                script {
+                    echo 'Waiting for 1 minutes...'
+                    sleep time: 60, unit: 'SECONDS'
+                }
+                sh 'ansible-playbook /home/ansible/3healthcheck0.yml'
+                sh 'ansible-playbook /home/ansible/3healthcheck1.yml'
+            }
+        }
+            //stage nhanh 4
+            stage('restart OTWS nhanh 4') {
+            when {
+                allOf {
+                    expression { inputNhanh == '4' }
+                    expression { inputType == '0' }
+                }
+            }
+            steps {
+                sh 'ansible-playbook /home/ansible/4recycleOTWS.yml'
+            }
+            }
+
+            stage('restart OTWS1 nhanh 4') {
+            when {
+                allOf {
+                    expression { inputNhanh == '4' }
+                    expression { inputType == '1' }
+                }
+            }
+            steps {
+                sh 'ansible-playbook /home/ansible/4recycleOTWS1.yml'
+            }
+            }
+                stage('restart all OTWS nhanh 4') {
+            when {
+                allOf {
+                    expression { inputNhanh == '4' }
+                    expression { inputType == 'all' }
+                }
+            }
+            steps {
+                sh 'ansible-playbook /home/ansible/4recycleOTWS.yml '
+                sh 'ansible-playbook /home/ansible/4recycleOTWS1.yml '
+            }
+                }
+                stage('check healthcheck after restart OTWS nhanh 4') {
+                    when {
+                allOf {
+                    expression { inputNhanh == '4' }
+                    expression { inputType == '0' }
+                }
+                    }
+                    steps {
+                script {
+                    echo 'Waiting for 1 minutes...'
+                    sleep time: 60, unit: 'SECONDS'
+                }
+                sh 'ansible-playbook /home/ansible/4healthcheck0.yml'
+                    }
+                }
+                stage('check healthcheck after restart OTWS1 nhanh 4') {
+            when {
+                allOf {
+                    expression { inputNhanh == '4' }
+                    expression { inputType == '4' }
+                }
+            }
+            steps {
+                script {
+                    echo 'Waiting for 1 minutes...'
+                    sleep time: 60, unit: 'SECONDS'
+                }
+                sh 'ansible-playbook /home/ansible/4healthcheck1.yml'
+            }
+                }
+        stage('check healthcheck after restart OTWS và OTWS1 nhanh 4') {
+            when {
+                allOf {
+                    expression { inputNhanh == '4' }
+                    expression { inputType == 'all' }
+                }
+            }
+            steps {
+                script {
+                    echo 'Waiting for 1 minutes...'
+                    sleep time: 60, unit: 'SECONDS'
+                }
+                sh 'ansible-playbook /home/ansible/4healthcheck0.yml'
+                sh 'ansible-playbook /home/ansible/4healthcheck1.yml'
+            }
+        }
+            stage('restart OTWS nhanh 5') {
+            when {
+                allOf {
+                    expression { inputNhanh == '5' }
+                    expression { inputType == '0' }
+                }
+            }
+            steps {
+                sh 'ansible-playbook /home/ansible/5recycleOTWS.yml'
+            }
+            }
+            //stage nhanh 5
+            stage('restart OTWS1 nhanh 5') {
+            when {
+                allOf {
+                    expression { inputNhanh == '5' }
+                    expression { inputType == '1' }
+                }
+            }
+            steps {
+                sh 'ansible-playbook /home/ansible/5recycleOTWS1.yml'
+            }
+            }
+                stage('restart all OTWS nhanh 5') {
+            when {
+                allOf {
+                    expression { inputNhanh == '5' }
+                    expression { inputType == 'all' }
+                }
+            }
+            steps {
+                sh 'ansible-playbook /home/ansible/5recycleOTWS.yml '
+                sh 'ansible-playbook /home/ansible/5recycleOTWS1.yml '
+            }
+                }
+                stage('check healthcheck after restart OTWS') {
+                    when {
+                allOf {
+                    expression { inputNhanh == '5' }
+                    expression { inputType == '0' }
+                }
+                    }
+                    steps {
+                script {
+                    echo 'Waiting for 1 minutes...'
+                    sleep time: 60, unit: 'SECONDS'
+                }
+                sh 'ansible-playbook /home/ansible/5healthcheck0.yml'
+                    }
+                }
+                stage('check healthcheck after restart OTWS1') {
+            when {
+                allOf {
+                    expression { inputNhanh == '5' }
+                    expression { inputType == '1' }
+                }
+            }
+            steps {
+                script {
+                    echo 'Waiting for 1 minutes...'
+                    sleep time: 60, unit: 'SECONDS'
+                }
+                sh 'ansible-playbook /home/ansible/5healthcheck1.yml'
+            }
+                }
+        stage('check healthcheck after restart OTWS và OTWS1') {
+            when {
+                allOf {
+                    expression { inputNhanh == '5' }
+                    expression { inputType == '1' }
+                }
+            }
+            steps {
+                script {
+                    echo 'Waiting for 1 minutes...'
+                    sleep time: 60, unit: 'SECONDS'
+                }
+                sh 'ansible-playbook /home/ansible/5healthcheck0.yml'
+                sh 'ansible-playbook /home/ansible/5healthcheck1.yml'
+            }
+        }
     }
+}
