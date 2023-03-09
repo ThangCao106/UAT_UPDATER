@@ -2,6 +2,10 @@ pipeline {
     agent any
     stages {
             stage('input OTWS') {
+                environment {
+                    inputNhanh = ''
+                    inputType = ''
+                }
                 steps {
                     script {
 
@@ -14,12 +18,11 @@ pipeline {
 
                     echo ("Nhanh OTWS restart:" + userInput.Nhanh)
                     echo ("Loai OTWS restart: " + userInput.Type)
-                    def inputNhanh = userInput.Nhanh ?: ''
-                    def inputType= userInput.Type ?: ''
-                    }
+                    inputNhanh = userInput.Nhanh ?: ''
+                    inputType= userInput.Type ?: ''
                     echo ("env Nhanh OTWS restart: ${inputNhanh}" )
                     echo ("env Loai OTWS restart: ${ inputType}" )
-
+                    }
                     }
                 }
 
