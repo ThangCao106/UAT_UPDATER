@@ -34,8 +34,6 @@ pipeline {
                     }
             }
             stage('restart OTWS nhanh 5') {
-                         echo ("inputNhanh: ${inputNhanh}")
-                        echo ("inputtype: ${ inputType}" ) 
                         when {
                             allOf {
                                 expression { ${inputNhanh} == '5' }
