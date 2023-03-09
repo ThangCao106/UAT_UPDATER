@@ -19,13 +19,13 @@ pipeline {
                 ])
                 
                  echo ("Nhanh OTWS restart:" + userInput.Nhanh)
-                echo ("Loai OTWS restart: " + userInput.Type) 
-                env.inputNhanh = userInput.Nhanh?:''
-                env.inputType = userInput.Type?:''
-                //echo("iput:   ${userInput}")
-                echo ("env Nhanh OTWS restart: ${ env.inputNhanh}" )
-                echo ("env Loai OTWS restart: ${ env.inputType}" ) 
-             
+                 echo ("Loai OTWS restart: " + userInput.Type) 
+                 withEnv(['inputNhanh='+userInput.Nhanh, 'inputType='+userInput.Type]) 
+                         {
+                        //echo("iput:   ${userInput}")
+                        echo ("env Nhanh OTWS restart: ${ env.inputNhanh}" )
+                        echo ("env Loai OTWS restart: ${ env.inputType}" ) 
+                        }
                     }
                 }
             }
@@ -71,7 +71,8 @@ pipeline {
                         }
              }
             
-          
+       }
+ }      
             
              
                 //  else{
