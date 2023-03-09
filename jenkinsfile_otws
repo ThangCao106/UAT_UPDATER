@@ -1,17 +1,9 @@
- //def inputNhanh
-                //def inputType
-def userInput = input( id: 'userInput', message: 'Chon nhanh OTWS can restart:?', 
-      parameters: [
-                    //string(defaultValue: 'None', description: 'Nhanh can restart', name: 'Nhanh'),
-          choice(name: 'Nhanh', choices: ['0', '1','2','3','4','5','all'], description: 'Nhanh can restart'),
-        choice(name: 'Type', choices: ['0', '1', 'all'], description: 'chọn OTWS cần restart') 
-                ])
 
 pipeline {  
     agent any
     environment {
-    inputNhanh = userInput.Nhanh
-    inputType = userInput.Type
+    inputNhanh = ""
+    inputType = ""
     }
     stages {
          stage('input OTWS') {
@@ -19,37 +11,35 @@ pipeline {
                 script {
                 //def inputNhanh
                 //def inputType
-                // def userInput = input( id: 'userInput', message: 'Chon nhanh OTWS can restart:?', 
-                //  parameters: [
-                //     //string(defaultValue: 'None', description: 'Nhanh can restart', name: 'Nhanh'),
-                //     choice(name: 'Nhanh', choices: ['0', '1','2','3','4','5','all'], description: 'Nhanh can restart'),
-                //     choice(name: 'Type', choices: ['0', '1', 'all'], description: 'chọn OTWS cần restart') 
-                // ])
+                def userInput = input( id: 'userInput', message: 'Chon nhanh OTWS can restart:?', 
+                 parameters: [
+                    //string(defaultValue: 'None', description: 'Nhanh can restart', name: 'Nhanh'),
+                    choice(name: 'Nhanh', choices: ['0', '1','2','3','4','5','all'], description: 'Nhanh can restart'),
+                    choice(name: 'Type', choices: ['0', '1', 'all'], description: 'chọn OTWS cần restart') 
+                ])
                 
-                //env.inputNhanh = userInput.Nhanh?:''
-                //env.inputType = userInput.Type?:''
-                //echo("iput:   ${userInput}")
-                echo ("Nhanh OTWS restart:" + userInput.Nhanh)
+                 echo ("Nhanh OTWS restart:" + userInput.Nhanh)
                 echo ("Loai OTWS restart: " + userInput.Type) 
+                env.inputNhanh = userInput.Nhanh?:''
+                env.inputType = userInput.Type?:''
+                //echo("iput:   ${userInput}")
+                echo ("env Nhanh OTWS restart: ${ env.inputNhanh}" =)
+                echo ("env Loai OTWS restart: $${ env.inputType}" ) 
              
                     }
                 }
             }
          stage('Show input values') {
-                environment {
-                                inputNhanh = 1
-                                inputType = 2
-                            }
                 steps {
-                    echo "inputNhanh: ${inputNhanh}"
-                    echo "inputType: ${inputType}"
+                    echo "inputNhanh: ${env.inputNhanh}"
+                    echo "inputType: ${env.inputType}"
                 }
                 }   
          stage('restart OTWS nhanh 5') {
                     when {
                         allOf {
-                             expression { inputNhanh == '5' }
-                             expression { inputType == '1' }
+                             expression { env.inputNhanh == '5' }
+                             expression { env.inputType == '1' }
                             }
                         }
                     steps{
