@@ -28,8 +28,8 @@ pipeline {
             stage('Show input values') {
                     steps {
                 
-                        echo "inputNhanh: ${env.inputNhanh}"
-                        echo "inputType: ${inputType}"
+                        echo ("inputNhanh: ${env.inputNhanh}")
+                        echo ("inputtype: " + userInput.Type) 
                       }
                     }   
             stage('restart OTWS nhanh 5') {
