@@ -94,23 +94,7 @@ pipeline {
                     echo 'Chuyển phiên HOSE KLLT thanh cong!'
                 }
             }
-            }
-             stage('Chuyển phiên HNX KLLT') {
-            when {
-                allOf {
-                    expression { inputSan == 'HNX' }
-                    expression { inputPhien == 'KLLT' }
-                }
-            }
-            steps {
-                sh 'curl "http://192.168.54.7:8880/admin"  -X POST   -d "{\"RType\":\"UpdateIndex\",\"IndexCode\":\"HNXIndex\",\"MarketStatus\": \"O\"}"&& echo "Success" || echo "Failure"'
-            }
-            post {
-                success {
-                    echo 'Chuyển phiên HNX KLLT thanh cong!'
-                }
-            }
-            }
+            
             stage('Chuyển phiên HNX ATC') {
             when {
                 allOf {
@@ -167,7 +151,7 @@ pipeline {
                 }
             }
             }
-            stage('Chuyển phiên VNFE ATC') {
+            stage('Chuyển phiên VNFE KLLL') {
             when {
                 allOf {
                     expression { inputSan == 'VNFE' }
@@ -237,6 +221,35 @@ pipeline {
                     echo 'Chuyển phiên HSX_ODDLOT ATO thanh cong!'
                 }
             }
+            }
+            stage('Chuyển All phiên KLLL') {
+            when {
+                allOf {
+                    expression { inputSan == 'all' }
+                    expression { inputPhien == 'KLLT' }
+                }
+            }
+            steps {
+                sh 'curl "http://192.168.54.7:8880/admin"  -X POST   -d "{\"RType\":\"UpdateIndex\",\"IndexCode\":\"VN\",\"MarketStatus\": \"O\",\"ChangeMS\":true}"&& echo "Success" || echo "Failure"'
+                
+                sh 'curl "http://192.168.54.7:8880/admin"  -X POST   -d "{\"RType\":\"UpdateIndex\",\"IndexCode\":\"HNXIndex\",\"MarketStatus\": \"O\"}"&& echo "Success" || echo "Failure"'
+                
+                sh 'curl "http://192.168.54.7:8880/admin"  -X POST   -d "{\"RType\":\"UpdateIndex\",\"IndexCode\":\"HNXUpcomIndex\",\"MarketStatus\": \"O\"}"&& echo "Success" || echo "Failure"'
+
+                sh 'curl "http://192.168.54.7:8880/admin"  -X POST   -d "{\"RType\":\"UpdateIndex\",\"IndexCode\":\"HSX_ODDLOT\",\"MarketStatus\": \"O\",\"ChangeMS\":true}"&& echo "Success" || echo "Failure"'
+
+                sh 'curl "http://192.168.54.7:8880/admin"  -X POST   -d "{ \"RType\":\"UpdateStock\", \"StockSymbol\":\"${MaPS1}\", \"ExchangeStatus\": \"O\"}" && echo "Success" || echo "Failure"' 
+		   
+                sh 'curl "http://192.168.54.7:8880/admin"  -X POST   -d "{ \"RType\":\"UpdateStock\", \"StockSymbol\": \"${MaPS2}\", \"ExchangeStatus\": \"O\"}" && echo "Success" || echo "Failure"'
+            
+                sh 'curl "http://192.168.54.7:8880/admin"  -X POST   -d "{ \"RType\":\"UpdateStock\", \"StockSymbol\": \"${MaPS3}\", \"ExchangeStatus\": \"O\"}"&& echo "Success" || echo "Failure"'
+            
+                sh 'curl "http://192.168.54.7:8880/admin"  -X POST   -d "{ \"RType\":\"UpdateStock\", \"StockSymbol\": \"${MaPS4}\", \"ExchangeStatus\": \"O\"}" && echo "Success" || echo "Failure"'
+            }
+            post {
+                success {
+                    echo 'Chuyển all phiên VNFE  thanh cong!'
+                }
             }
 
         }
