@@ -94,7 +94,7 @@ pipeline {
                     echo 'Chuyển phiên HOSE KLLT thanh cong!'
                 }
             }
-            
+            }
             stage('Chuyển phiên HNX ATC') {
             when {
                 allOf {
@@ -254,4 +254,4 @@ pipeline {
 
         }
     }
-
+}
