@@ -39,9 +39,7 @@ pipeline {
             }
             steps {
                 echo ("env Ma chung khoan: ${inputMa}" )
-                def postcommand = \"RType\":\"UpdateStock\", \"StockSymbol\": \"${inputMa}\", \"HaltResumeFlag\": \"H\"
-                echo ("env command: ${postcommand}" )
-                sh 'curl "http://192.168.54.7:8880/admin" -X POST   -d "{${postcommand}}"&& echo "Success" || echo "Failure"'
+                sh "curl 'http://192.168.54.7:8880/admin' -X POST   -d '{\"RType\":\"UpdateStock\", \"StockSymbol\": \"${inputMa}\", \"HaltResumeFlag\": \"H\"}' && echo "Success" || echo "Failure""
             }
             post {
                 success {
