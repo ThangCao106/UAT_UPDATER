@@ -42,7 +42,7 @@ pipeline {
             }
             post {
                 success {
-                    echo -e '\033[32mHalt lô chẵn mã ${inputMa} thành công!\033[0m'
+                    echo -e "\033[32mHalt lô chẵn mã ${inputMa} thành công!\033[0m"
                 }
             }
             }
@@ -58,7 +58,7 @@ pipeline {
             }
             post {
                 success {
-                    echo -e '\033[32mHalt lô lẻ mã ${inputMa} thành công!\033[0m'
+                    echo -e "\033[32mHalt lô lẻ mã ${inputMa} thành công!\033[0m"
                 }
             }
             }
@@ -74,7 +74,7 @@ pipeline {
             }
             post {
                 success {
-                    echo -e '\033[32mHalt lô chẵn và  lô lẻ mã ${inputMa} thành công!\033[0m'
+                    echo -e "\033[32mHalt lô chẵn và  lô lẻ mã ${inputMa} thành công!\033[0m"
                 }
             }
             }
@@ -90,7 +90,7 @@ pipeline {
             }
             post {
                 success {
-                    echo -e '\033[32mUnHalt lô chẵn mã ${inputMa} thành công!\033[0m'
+                    echo -e "\033[32mUnHalt lô chẵn mã ${inputMa} thành công!\033[0m"
                 }
             }
             }
@@ -106,7 +106,7 @@ pipeline {
             }
             post {
                 success {
-                    echo -e '\033[32mUnHalt lô lẻ mã ${inputMa} thành công!\033[0m'
+                    echo -e "\033[32mUnHalt lô lẻ mã ${inputMa} thành công!\033[0m"
                 }
             }
             }
@@ -122,7 +122,7 @@ pipeline {
             }
             post {
                 success {
-                    echo -e '\033[32mUnHalt lô chẵn và  lô lẻ mã ${inputMa} thành công!\033[0m'
+                    echo -e "\033[32mUnHalt lô chẵn và  lô lẻ mã ${inputMa} thành công!\033[0m"
                 }
             }
             }
