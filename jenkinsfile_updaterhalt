@@ -42,7 +42,9 @@ pipeline {
             }
             post {
                 success {
-                    echo -e "\033[32mHalt lô chẵn mã ${inputMa} thành công!\033[0m"
+                    ansiColor('xterm'){
+                    echo 'Halt lô chẵn mã ${inputMa} thành công!'
+                    }
                 }
             }
             }
@@ -58,7 +60,9 @@ pipeline {
             }
             post {
                 success {
-                    echo -e "\033[32mHalt lô lẻ mã ${inputMa} thành công!\033[0m"
+                    ansiColor('xterm'){
+                    echo 'Halt lô lẻ mã ${inputMa} thành công!'
+                    }
                 }
             }
             }
@@ -74,7 +78,9 @@ pipeline {
             }
             post {
                 success {
-                    echo -e "\033[32mHalt lô chẵn và  lô lẻ mã ${inputMa} thành công!\033[0m"
+                    ansiColor('xterm'){
+                    echo 'Halt lô chẵn và lô lẻ mã ${inputMa} thành công!'
+                    }
                 }
             }
             }
@@ -90,7 +96,9 @@ pipeline {
             }
             post {
                 success {
-                    echo -e "\033[32mUnHalt lô chẵn mã ${inputMa} thành công!\033[0m"
+                    ansiColor('xterm'){
+                    echo 'UnHalt lô chẵn mã ${inputMa} thành công!'
+                    }
                 }
             }
             }
@@ -106,7 +114,9 @@ pipeline {
             }
             post {
                 success {
-                    echo -e "\033[32mUnHalt lô lẻ mã ${inputMa} thành công!\033[0m"
+                    ansiColor('xterm'){
+                    echo 'unHalt lô chẵn mã ${inputMa} thành công!'
+                    }
                 }
             }
             }
@@ -122,7 +132,9 @@ pipeline {
             }
             post {
                 success {
-                    echo -e "\033[32mUnHalt lô chẵn và  lô lẻ mã ${inputMa} thành công!\033[0m"
+                    ansiColor('xterm'){
+                    echo 'UnHalt lô chẵn và lô lẻ mã ${inputMa} thành công!'
+                    }
                 }
             }
             }
