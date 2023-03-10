@@ -1,0 +1,132 @@
+pipeline {  
+    agent any
+    stages {
+		 stage('input OTWS') {
+                environment {
+                    inputMa = ''
+                    inputType = ''
+                    inputLoai = ''
+                }
+                steps {
+                    script {
+
+                    def userInput = input( id: 'userInput', message: 'Chọn sàn cần reload :?',
+                    parameters: [
+                        string(defaultValue: 'None', description: 'Nhập mã cần reload', name: 'Ma'),
+                        choice(name: 'San', choices: ['HOSE', 'HNX','UPCOM','VNFE','HSX_ODDLOT','all'], description: 'San can chuyen phien'),
+                        //choice(name: 'Type', choices: ['Halt', 'UnHalt'], description: 'Chọn trạng thái Halt')
+                        choice(name: 'Loai', choices: ['Le', 'Chan','All'], description: 'Chọn lô cần chuyển Halt')
+                    ])
+
+                    echo ("Ma chung khoan:" + userInput.Ma)
+                    echo ("Trang thai Halt: " + userInput.Type)
+                     echo ("Loai: " + userInput.Loai)
+                    inputMa = userInput.Ma ?: ''
+                    inputType= userInput.Type ?: ''
+                    inputLoai= userInput.Loai ?: ''
+                    echo ("env Ma chung khoan: ${inputMa}" )
+                    echo ("env Trang thai Halt: ${ inputType}" )
+                    echo ("env Loai: ${ inputLoai}" )
+                    }
+                    }
+                }
+        stage('Halt lô chẵn') {
+            when {
+                allOf {
+                    expression { inputType == 'Halt' }
+                    expression { inputLoai == 'Chan' }
+                }
+            }
+            steps {
+                sh 'curl "http://192.168.54.7:8880/admin"  -X POST   -d "{ \"RType\":\"UpdateStock\", \"StockSymbol\": \"${inputMa}\", \"HaltResumeFlag\": \"H\"}"&& echo "Success" || echo "Failure"'
+            }
+            post {
+                success {
+                    echo -e '\033[32mHalt lô chẵn mã ${inputMa} thành công!\033[0m'
+                }
+            }
+            }
+            stage('Halt lô lẻ') {
+            when {
+                allOf {
+                    expression { inputType == 'Halt' }
+                    expression { inputLoai == 'Le' }
+                }
+            }
+            steps {
+                sh 'curl "http://192.168.54.7:8880/admin" -X POST   -d "{ \"RType\":\"UpdateStock\", \"StockSymbol\": \"${inputMa}\", \"HaltResumeFlagOddLot\": \"H\"}" && echo "Success" || echo "Failure"'
+            }
+            post {
+                success {
+                    echo -e '\033[32mHalt lô lẻ mã ${inputMa} thành công!\033[0m'
+                }
+            }
+            }
+            stage('Halt lô chẵn và lô lẻ') {
+            when {
+                allOf {
+                    expression { inputType == 'Halt' }
+                    expression { inputLoai == 'All' }
+                }
+            }
+            steps {
+                sh 'curl "http://192.168.54.7:8880/admin" -X POST   -d "{ \"RType\":\"UpdateStock\", \"StockSymbol\": \"${inputMa}\", \"HaltResumeFlag\": \"H\", \"HaltResumeFlagOddLot\": \"H\"}" && echo "Success" || echo "Failure"'
+            }
+            post {
+                success {
+                    echo -e '\033[32mHalt lô chẵn và  lô lẻ mã ${inputMa} thành công!\033[0m'
+                }
+            }
+            }
+            stage('UnHalt lô chẵn') {
+            when {
+                allOf {
+                    expression { inputType == 'UnHalt' }
+                    expression { inputLoai == 'Chan' }
+                }
+            }
+            steps {
+                sh 'curl "http://192.168.54.7:8880/admin"  -X POST   -d "{ \"RType\":\"UpdateStock\", \"StockSymbol\": \"${inputMa}\", \"HaltResumeFlag\": \"\"}"&& echo "Success" || echo "Failure"'
+            }
+            post {
+                success {
+                    echo -e '\033[32mUnHalt lô chẵn mã ${inputMa} thành công!\033[0m'
+                }
+            }
+            }
+            stage('UnHalt lô lẻ') {
+            when {
+                allOf {
+                    expression { inputType == 'UnHalt' }
+                    expression { inputLoai == 'Le' }
+                }
+            }
+            steps {
+                sh 'curl "http://192.168.54.7:8880/admin" -X POST   -d "{ \"RType\":\"UpdateStock\", \"StockSymbol\": \"${inputMa}\", \"HaltResumeFlagOddLot\": \"\"}" && echo "Success" || echo "Failure"'
+            }
+            post {
+                success {
+                    echo -e '\033[32mUnHalt lô lẻ mã ${inputMa} thành công!\033[0m'
+                }
+            }
+            }
+            stage('UnHalt lô chẵn và lô lẻ') {
+            when {
+                allOf {
+                    expression { inputType == 'UnHalt' }
+                    expression { inputLoai == 'All' }
+                }
+            }
+            steps {
+                sh 'curl "http://192.168.54.7:8880/admin" -X POST   -d "{ \"RType\":\"UpdateStock\", \"StockSymbol\": \"${inputMa}\", \"HaltResumeFlag\": \"\", \"HaltResumeFlagOddLot\": \"\"}" && echo "Success" || echo "Failure"'  
+            }
+            post {
+                success {
+                    echo -e '\033[32mUnHalt lô chẵn và  lô lẻ mã ${inputMa} thành công!\033[0m'
+                }
+            }
+            }
+
+        }
+    }
+
