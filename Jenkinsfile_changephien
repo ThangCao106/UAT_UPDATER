@@ -91,7 +91,7 @@ pipeline {
             }
             post {
                 success {
-                    echo 'Chuyển phiên HOSE KLLT thanh cong!'
+                    echo 'Chuyển phiên HNX KLLT thanh cong!'
                 }
             }
             }
@@ -137,6 +137,8 @@ pipeline {
                 }
             }
             steps {
+                sh 'curl "http://localhost:8880/admin"  -X POST   -d "{\"RType\":\"UpdateIndex\",\"IndexCode\":\"DER\",\"MarketName\":\"VNFE\",\"MarketStatus\":\"S\",\"ChangeMS\":true}" '
+
                 sh 'curl "http://192.168.54.7:8880/admin"  -X POST   -d "{ \"RType\":\"UpdateStock\", \"StockSymbol\":\"${MaPS1}\", \"ExchangeStatus\": \"Q\"}" && echo "Success" || echo "Failure"' 
 		   
                 sh 'curl "http://192.168.54.7:8880/admin"  -X POST   -d "{ \"RType\":\"UpdateStock\", \"StockSymbol\": \"${MaPS2}\", \"ExchangeStatus\": \"Q\"}" && echo "Success" || echo "Failure"'
