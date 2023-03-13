@@ -450,7 +450,7 @@ pipeline {
             when {
                 allOf {
                     expression { inputNhanh == '4' }
-                    expression { inputType == '4' }
+                    expression { inputType == '1' }
                 }
             }
             steps {
@@ -583,7 +583,7 @@ pipeline {
             when {
                 allOf {
                     expression { inputNhanh == '5' }
-                    expression { inputType == '1' }
+                    expression { inputType == 'all' }
                 }
             }
             steps {
@@ -598,6 +598,65 @@ pipeline {
                     success {
                     echo 'check healthcheck OTWS nhanh 5 thanh cong!'
                     echo 'check healthcheck OTWS1 nhanh 5 thanh cong!'
+                    }
+            }
+        }
+         // stage all nhanh
+                stage('restart all OTWS nhanh 5') {
+            when {
+                allOf {
+                    expression { inputNhanh == 'all' }
+                    expression { inputType == 'all' }
+                }
+            }
+            steps {
+                sh 'ansible-playbook /home/ansible/1ecycleOTWS.yml '
+                sh 'ansible-playbook /home/ansible/1recycleOTWS1.yml '
+                sh 'ansible-playbook /home/ansible/2recycleOTWS.yml '
+                sh 'ansible-playbook /home/ansible/2recycleOTWS1.yml '
+                sh 'ansible-playbook /home/ansible/3recycleOTWS.yml '
+                sh 'ansible-playbook /home/ansible/3recycleOTWS1.yml '
+                sh 'ansible-playbook /home/ansible/4recycleOTWS.yml '
+                sh 'ansible-playbook /home/ansible/4recycleOTWS1.yml '
+                sh 'ansible-playbook /home/ansible/5recycleOTWS.yml '
+                sh 'ansible-playbook /home/ansible/5recycleOTWS1.yml '
+            }
+            post {
+                success {
+                    ansiColor('xterm'){
+                    echo 'restart OTWS all nhanh  thanh cong!'
+                    echo 'restart OTWS1 all nhanh  thanh cong!'
+                    }
+                }
+            }
+        stage('check healthcheck after restart OTWS và OTWS1') {
+            when {
+                allOf {
+                    expression { inputNhanh == 'all' }
+                    expression { inputType == 'all' }
+                }
+            }
+            steps {
+                script {
+                    echo 'Waiting for 1 minutes...'
+                    sleep time: 60, unit: 'SECONDS'
+                }
+                sh 'ansible-playbook /home/ansible/1healthcheck0.yml'
+                sh 'ansible-playbook /home/ansible/1healthcheck1.yml'
+                sh 'ansible-playbook /home/ansible/2healthcheck0.yml'
+                sh 'ansible-playbook /home/ansible/2healthcheck1.yml'
+                sh 'ansible-playbook /home/ansible/3healthcheck0.yml'
+                sh 'ansible-playbook /home/ansible/3healthcheck1.yml'
+                sh 'ansible-playbook /home/ansible/4healthcheck0.yml'
+                sh 'ansible-playbook /home/ansible/4healthcheck1.yml'
+                sh 'ansible-playbook /home/ansible/5healthcheck0.yml'
+                sh 'ansible-playbook /home/ansible/5healthcheck1.yml'
+
+            }
+            post {
+                    success {
+                    echo 'check healthcheck OTWS all nhanh thanh cong!'
+                    echo 'check healthcheck OTWS1 all nhanh thanh cong!'
                     }
             }
         }
