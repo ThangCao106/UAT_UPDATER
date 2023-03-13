@@ -40,6 +40,7 @@ pipeline {
             steps {
                 echo ("env Ma chung khoan: ${inputMa}" )
                 sh 'curl "http://192.168.54.7:8880/admin" -X POST -d "{RType:UpdateStock, StockSymbol: ${env.inputMa}, HaltResumeFlag: H}" && echo "Success" || echo "Failure"'            }
+            }
             post {
                 success {
                     ansiColor('xterm'){
@@ -48,6 +49,7 @@ pipeline {
                 }
             }
             }
+    
             stage('Halt lô lẻ') {
             when {
                 allOf {
