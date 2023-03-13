@@ -63,7 +63,6 @@ pipeline {
                 //sh 'curl "http://192.168.54.7:8880/admin" -X POST -d "{RType:UpdateStock, StockSymbol: ${env.inputMa}, HaltResumeFlagOddLot: H}" && echo "Success" || echo "Failure"' 
 
             sh 'curl "http://192.168.54.7:8880/admin" -X POST   -d "{ \"RType\":\"UpdateStock\", \"StockSymbol\": \"env.inputMa\", \"HaltResumeFlagOddLot\": \"H\"}" && echo "Success" || echo "Failure"'
-String 
             }
             post {
                 success {
