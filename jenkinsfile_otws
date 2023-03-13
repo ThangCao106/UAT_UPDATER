@@ -629,6 +629,7 @@ pipeline {
                     }
                 }
             }
+         }
         stage('check healthcheck after restart OTWS và OTWS1') {
             when {
                 allOf {
@@ -662,3 +663,4 @@ pipeline {
         }
     }
 }
+
