@@ -610,7 +610,7 @@ pipeline {
                 }
             }
             steps {
-                sh 'ansible-playbook /home/ansible/1ecycleOTWS.yml '
+                sh 'ansible-playbook /home/ansible/1recycleOTWS.yml '
                 sh 'ansible-playbook /home/ansible/1recycleOTWS1.yml '
                 sh 'ansible-playbook /home/ansible/2recycleOTWS.yml '
                 sh 'ansible-playbook /home/ansible/2recycleOTWS1.yml '
